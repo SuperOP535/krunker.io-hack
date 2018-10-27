@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name         Krunker.io Public ESP Hack
 // @description  Krunker.io ESP Hack
+// @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
+// @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @version      1.0.0
 // @author       Faber
 // @match        *://krunker.io/*
