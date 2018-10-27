@@ -3,7 +3,7 @@
 // @description  Krunker.io ESP Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.0.0
+// @version      1.2
 // @author       Faber
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
