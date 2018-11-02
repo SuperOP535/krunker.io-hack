@@ -3,11 +3,162 @@
 // @description  Krunker.io ESP Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.2
+// @version      1.4
 // @author       Faber
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
 
-var _0x1cae=['QX7DrMOgRRBuUcKowoJdfg==','OMOhGsKnGMKfwrc=','fgLCnw==','w6XDmGdPwodtNH7ClcK4O8K7w7TDtsKUwrzDp8KuAg==','LcOTDsK+w5bCp1Q0wo3CgTHDoA==','w6XDqmPCgMOjf8K0','w5FNwrnDqcOdw7dWA8OZw6gvw4HDg1vDmg==','JVzDhlhZLxA=','w4bDnMOtVVjCi3ZvwokLwrh/w6LCp8KZSy4h','LsK/wr/CpsKTwr1IAg==','w7jDv3bCgg==','w7QKXyPCrw==','wp7CjE9Z','Wi0QX8KVwq/CtMKywqY=','w7p0wqc=','dH8gNmFxwrRPeWN4bMK2w4Qpwr4mwoJpIcK7B8OrwrUhw7bCp8KoVw=='];(function(_0x15229f,_0x18dc9c){var _0x158698=function(_0xd09c95){while(--_0xd09c95){_0x15229f['push'](_0x15229f['shift']());}};var _0x148932=function(){var _0x2ab015={'data':{'key':'cookie','value':'timeout'},'setCookie':function(_0x3e028f,_0xcfdb3e,_0x577d89,_0x4941a1){_0x4941a1=_0x4941a1||{};var _0x167e71=_0xcfdb3e+'='+_0x577d89;var _0x45aed2=0x0;for(var _0x45aed2=0x0,_0xf68f3d=_0x3e028f['length'];_0x45aed2<_0xf68f3d;_0x45aed2++){var _0x563bf3=_0x3e028f[_0x45aed2];_0x167e71+=';\x20'+_0x563bf3;var _0x1aa16f=_0x3e028f[_0x563bf3];_0x3e028f['push'](_0x1aa16f);_0xf68f3d=_0x3e028f['length'];if(_0x1aa16f!==!![]){_0x167e71+='='+_0x1aa16f;}}_0x4941a1['cookie']=_0x167e71;},'removeCookie':function(){return'dev';},'getCookie':function(_0x3dcf27,_0x2d95e9){_0x3dcf27=_0x3dcf27||function(_0x5750cb){return _0x5750cb;};var _0x2adf6c=_0x3dcf27(new RegExp('(?:^|;\x20)'+_0x2d95e9['replace'](/([.$?*|{}()[]\/+^])/g,'$1')+'=([^;]*)'));var _0xe883f4=function(_0x1abc80,_0x3da0e4){_0x1abc80(++_0x3da0e4);};_0xe883f4(_0x158698,_0x18dc9c);return _0x2adf6c?decodeURIComponent(_0x2adf6c[0x1]):undefined;}};var _0x1e69a0=function(){var _0x1bb0d3=new RegExp('\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*[\x27|\x22].+[\x27|\x22];?\x20*}');return _0x1bb0d3['test'](_0x2ab015['removeCookie']['toString']());};_0x2ab015['updateCookie']=_0x1e69a0;var _0x1475f0='';var _0x47dd89=_0x2ab015['updateCookie']();if(!_0x47dd89){_0x2ab015['setCookie'](['*'],'counter',0x1);}else if(_0x47dd89){_0x1475f0=_0x2ab015['getCookie'](null,'counter');}else{_0x2ab015['removeCookie']();}};_0x148932();}(_0x1cae,0x1ec));var _0x1766=function(_0x4086f7,_0x1aec3e){_0x4086f7=_0x4086f7-0x0;var _0x128a73=_0x1cae[_0x4086f7];if(_0x1766['YZoVIB']===undefined){(function(){var _0x15b61f=function(){var _0x412a0b;try{_0x412a0b=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x22edf5){_0x412a0b=window;}return _0x412a0b;};var _0x1cd2ee=_0x15b61f();var _0x519a05='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x1cd2ee['atob']||(_0x1cd2ee['atob']=function(_0x3833b7){var _0x5c11e9=String(_0x3833b7)['replace'](/=+$/,'');for(var _0x53ccfd=0x0,_0x7ad9a5,_0x40797d,_0x5a9aba=0x0,_0x53bdaf='';_0x40797d=_0x5c11e9['charAt'](_0x5a9aba++);~_0x40797d&&(_0x7ad9a5=_0x53ccfd%0x4?_0x7ad9a5*0x40+_0x40797d:_0x40797d,_0x53ccfd++%0x4)?_0x53bdaf+=String['fromCharCode'](0xff&_0x7ad9a5>>(-0x2*_0x53ccfd&0x6)):0x0){_0x40797d=_0x519a05['indexOf'](_0x40797d);}return _0x53bdaf;});}());var _0x3791fc=function(_0x229bfb,_0x1aec3e){var _0x37accf=[],_0x1208f6=0x0,_0x21179d,_0x3e414f='',_0x46c66c='';_0x229bfb=atob(_0x229bfb);for(var _0x6c9b3a=0x0,_0x58fed7=_0x229bfb['length'];_0x6c9b3a<_0x58fed7;_0x6c9b3a++){_0x46c66c+='%'+('00'+_0x229bfb['charCodeAt'](_0x6c9b3a)['toString'](0x10))['slice'](-0x2);}_0x229bfb=decodeURIComponent(_0x46c66c);for(var _0x199a59=0x0;_0x199a59<0x100;_0x199a59++){_0x37accf[_0x199a59]=_0x199a59;}for(_0x199a59=0x0;_0x199a59<0x100;_0x199a59++){_0x1208f6=(_0x1208f6+_0x37accf[_0x199a59]+_0x1aec3e['charCodeAt'](_0x199a59%_0x1aec3e['length']))%0x100;_0x21179d=_0x37accf[_0x199a59];_0x37accf[_0x199a59]=_0x37accf[_0x1208f6];_0x37accf[_0x1208f6]=_0x21179d;}_0x199a59=0x0;_0x1208f6=0x0;for(var _0x1af001=0x0;_0x1af001<_0x229bfb['length'];_0x1af001++){_0x199a59=(_0x199a59+0x1)%0x100;_0x1208f6=(_0x1208f6+_0x37accf[_0x199a59])%0x100;_0x21179d=_0x37accf[_0x199a59];_0x37accf[_0x199a59]=_0x37accf[_0x1208f6];_0x37accf[_0x1208f6]=_0x21179d;_0x3e414f+=String['fromCharCode'](_0x229bfb['charCodeAt'](_0x1af001)^_0x37accf[(_0x37accf[_0x199a59]+_0x37accf[_0x1208f6])%0x100]);}return _0x3e414f;};_0x1766['svdHPk']=_0x3791fc;_0x1766['quWEAG']={};_0x1766['YZoVIB']=!![];}var _0x1a05ec=_0x1766['quWEAG'][_0x4086f7];if(_0x1a05ec===undefined){if(_0x1766['cFxPGw']===undefined){var _0x5f3de3=function(_0x5a9d07){this['NJKCde']=_0x5a9d07;this['hgIpCn']=[0x1,0x0,0x0];this['ocvqYn']=function(){return'newState';};this['JKzVeD']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*';this['tFDqbv']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x5f3de3['prototype']['mqpJms']=function(){var _0x248f79=new RegExp(this['JKzVeD']+this['tFDqbv']);var _0xb5a4a7=_0x248f79['test'](this['ocvqYn']['toString']())?--this['hgIpCn'][0x1]:--this['hgIpCn'][0x0];return this['CnGltg'](_0xb5a4a7);};_0x5f3de3['prototype']['CnGltg']=function(_0x43f16a){if(!Boolean(~_0x43f16a)){return _0x43f16a;}return this['oCcrUL'](this['NJKCde']);};_0x5f3de3['prototype']['oCcrUL']=function(_0x2e9219){for(var _0x2e710b=0x0,_0x57e7f3=this['hgIpCn']['length'];_0x2e710b<_0x57e7f3;_0x2e710b++){this['hgIpCn']['push'](Math['round'](Math['random']()));_0x57e7f3=this['hgIpCn']['length'];}return _0x2e9219(this['hgIpCn'][0x0]);};new _0x5f3de3(_0x1766)['mqpJms']();_0x1766['cFxPGw']=!![];}_0x128a73=_0x1766['svdHPk'](_0x128a73,_0x1aec3e);_0x1766['quWEAG'][_0x4086f7]=_0x128a73;}else{_0x128a73=_0x1a05ec;}return _0x128a73;};var _0x343915=function(){var _0x8a19ca=!![];return function(_0x5a4bc6,_0x35f039){var _0x4266a1=_0x8a19ca?function(){if(_0x35f039){var _0x4820fa=_0x35f039['apply'](_0x5a4bc6,arguments);_0x35f039=null;return _0x4820fa;}}:function(){};_0x8a19ca=![];return _0x4266a1;};}();var _0x5b6938=_0x343915(this,function(){var _0xeabfb1=function(){return'\x64\x65\x76';},_0x3d723a=function(){return'\x77\x69\x6e\x64\x6f\x77';};var _0x5cad25=function(){var _0x3b94d7=new RegExp('\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d');return!_0x3b94d7['\x74\x65\x73\x74'](_0xeabfb1['\x74\x6f\x53\x74\x72\x69\x6e\x67']());};var _0x3efb40=function(){var _0x54aeee=new RegExp('\x28\x5c\x5c\x5b\x78\x7c\x75\x5d\x28\x5c\x77\x29\x7b\x32\x2c\x34\x7d\x29\x2b');return _0x54aeee['\x74\x65\x73\x74'](_0x3d723a['\x74\x6f\x53\x74\x72\x69\x6e\x67']());};var _0x58aa4b=function(_0x42b67a){var _0x58b5ff=~-0x1>>0x1+0xff%0x0;if(_0x42b67a['\x69\x6e\x64\x65\x78\x4f\x66']('\x69'===_0x58b5ff)){_0x346b42(_0x42b67a);}};var _0x346b42=function(_0x444186){var _0x606970=~-0x4>>0x1+0xff%0x0;if(_0x444186['\x69\x6e\x64\x65\x78\x4f\x66']((!![]+'')[0x3])!==_0x606970){_0x58aa4b(_0x444186);}};if(!_0x5cad25()){if(!_0x3efb40()){_0x58aa4b('\x69\x6e\x64\u0435\x78\x4f\x66');}else{_0x58aa4b('\x69\x6e\x64\x65\x78\x4f\x66');}}else{_0x58aa4b('\x69\x6e\x64\u0435\x78\x4f\x66');}});_0x5b6938();window[_0x1766('0x0','gJND')]();document[_0x1766('0x1','Nsme')]='';GM_xmlhttpRequest({'method':_0x1766('0x2','od*K'),'url':_0x1766('0x3','S^IJ'),'onload':function(_0x1f08d7){var _0xf9d4b8=_0x1f08d7[_0x1766('0x4','0gnc')];_0xf9d4b8=_0xf9d4b8['replace'](/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/,'$2');_0xf9d4b8=_0xf9d4b8['replace'](/if\(\w+\.notObstructed\){/,'');_0xf9d4b8=_0xf9d4b8[_0x1766('0x5','Uy^X')](/}else \w+\.style\.display="none"/,'');_0xf9d4b8=_0xf9d4b8[_0x1766('0x5','Uy^X')](/(\w+\.project\(\w+\.camera\))/,'$1');GM_xmlhttpRequest({'method':_0x1766('0x6','!j)j'),'url':_0x1766('0x7',']dR('),'onload':function(_0x1f08d7){var _0x4dfbb7=_0x1f08d7[_0x1766('0x8','jVne')];_0x4dfbb7=_0x4dfbb7[_0x1766('0x9','%xGS')](_0x1766('0xa','z07A'),'');_0x4dfbb7=_0x4dfbb7[_0x1766('0xb','2Oyc')](_0x1766('0xc','kOm%'),'>'+_0xf9d4b8[_0x1766('0xd','Oc6T')]());console['log'](_0xf9d4b8);document[_0x1766('0xe','%xGS')]();document['write'](_0x4dfbb7);document[_0x1766('0xf','CcHY')]();}});}});
+stop()
+document.innerHTML = ""
+function setHooks(hack) {
+    hack = {
+        canvas: null,
+        ctx: null,
+        hooks: {
+            entities: [],
+            world: null
+        },
+        getDistance3D(x1, y1, z1, x2, y2, z2) {
+            const dx = x1 - x2
+            const dy = y1 - y2
+            const dz = z1 - z2
+            return Math.sqrt(dx * dx + dy * dy + dz * dz)
+        },
+        createCanvas() {
+            const hookedCanvas = document.createElement("canvas")
+            hookedCanvas.id = "hookedcv"
+            hookedCanvas.width = innerWidth
+            hookedCanvas.height = innerHeight
+            window.onresize = () => {
+                hookedCanvas.width = innerWidth
+                hookedCanvas.height = innerHeight
+            }
+            this.canvas = hookedCanvas
+            this.ctx = hookedCanvas.getContext("2d")
+            const hookedUI = document.getElementById("inGameUI")
+            hookedUI.insertAdjacentElement("beforeend", hookedCanvas)
+            requestAnimationFrame(this.render.bind(this))
+        },
+        drawText(txt, font, color, x, y) {
+            this.ctx.save()
+            this.ctx.translate(x, y)
+            this.ctx.beginPath()
+            this.ctx.fillStyle = color
+            this.ctx.font = font
+            this.ctx.fillText(txt, 0, 0)
+            this.ctx.closePath()
+            this.ctx.restore()
+        },
+        getMyself() {
+            return this.hooks.entities.find(x => x.isYou)
+        },
+        drawESP() {
+            for (const entity of this.hooks.entities.filter(x => !x.isYou)) {
+                if (entity.active) {
+                    const me = this.hooks.world.camera.getWorldPosition()
+                    const target = entity.objInstances.position.clone()
+                    const dist = 1 - this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 600
+                    if (20 * dist >= 1 && this.hooks.world.frustum.containsPoint(target)) {
+                        const scale = Math.max(.1, 1 - this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 600)
+                        const targetX = entity.hookedX
+                        const targetY = entity.hookedY + 60 * scale
+                        const offsetX = 80
+                        const offsetY = 180
+
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
+                        this.ctx.stroke()
+                        this.ctx.closePath()
+                        this.ctx.restore()
+
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "green"
+                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
+                        this.ctx.fill()
+                        this.ctx.closePath()
+                        this.ctx.restore()
+
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale)
+                        this.ctx.fill()
+                        this.ctx.closePath()
+                        this.ctx.restore()
+
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, offsetX * scale, offsetY * scale)
+                        this.ctx.stroke()
+                        this.ctx.closePath()
+                        this.ctx.restore()
+
+                        const fontSize = 26 * scale > 13 ? 13 : 26 * scale
+                        this.drawText(`Name: ${entity.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
+                        this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
+                        this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
+                        this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
+                        this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+
+                        this.ctx.save()
+                        this.ctx.lineWidth = 2
+                        this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
+                        this.ctx.moveTo(innerWidth / 2, innerHeight - 1)
+                        this.ctx.lineTo(targetX, targetY)
+                        this.ctx.stroke()
+                        this.ctx.restore()
+
+                    }
+                }
+            }
+        },
+        render() {
+            this.ctx.clearRect(0, 0, innerWidth, innerHeight)
+            this.drawESP()
+            requestAnimationFrame(this.render.bind(this))
+        },
+        onLoad() {
+            window.playerInfos.style.width = "0%"
+            hack.createCanvas()
+        }
+    }
+    hack.onLoad()
+    return hack
+}
+
+GM_xmlhttpRequest({
+    method: "GET",
+    url: "https://krunker.io/js/game.js",
+    onload: res => {
+        let code = res.responseText
+        code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
+            .replace(/if\(\w+\.notObstructed\){/, "")
+            .replace(/}else \w+\.style\.display="none"/, "")
+            .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
+            .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
+            .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+;window\.hack\.hooks\.entities=\[\];)/, "$1window.hack.hooks.world=$2;")
+            .replace(/(\w+\.style\.left=)100\*(\w+\.\w+)\+"%",/, '$1$2*innerWidth+"px",window.hack.hooks.entities[i].hookedX=$2*innerWidth,')
+            .replace(/(\w+\.style\.top=)100\*\(1-(\w+\.\w+)\)\+"%",/, '$1(1-$2)*innerHeight+"px",window.hack.hooks.entities[i].hookedY=(1-$2)*innerHeight,')
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: "https://krunker.io/",
+            onload: res => {
+                let html = res.responseText
+                html = html.replace(' src="js/game.js">', `>${setHooks.toString()}\nwindow.hack = setHooks({})\n${code.toString()}`);
+                document.open()
+                document.write(html)
+                document.close()
+            }
+        });
+    }
+});
