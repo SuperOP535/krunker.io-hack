@@ -3,7 +3,7 @@
 // @description  Krunker.io ESP Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.4
+// @version      1.5
 // @author       Faber
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -14,6 +14,9 @@ stop()
 document.innerHTML = ""
 function setHooks(hack) {
     hack = {
+		fps: 0,
+		fpsTimes: [],
+		fpsCounter: null,
         canvas: null,
         ctx: null,
         hooks: {
@@ -41,6 +44,19 @@ function setHooks(hack) {
             hookedUI.insertAdjacentElement("beforeend", hookedCanvas)
             requestAnimationFrame(this.render.bind(this))
         },
+		createFPSCounter() {
+			var e = document.createElement("div");
+			e.id = "fpsCounter",
+			e.style.position = "absolute",
+			e.style.color = "white",
+			e.style.top = "0px",
+			e.style.left = "20px",
+			e.style.fontSize = "smaller",
+			e.innerHTML = "Fps: " + this.fps;
+			this.fpsCounter = e;
+			var n = document.getElementById("gameUI");
+			n.appendChild(e, n);
+		},
         drawText(txt, font, color, x, y) {
             this.ctx.save()
             this.ctx.translate(x, y)
@@ -122,14 +138,24 @@ function setHooks(hack) {
                 }
             }
         },
+		drawFPS() {
+			const t = performance.now();
+			for (; this.fpsTimes.length > 0 && this.fpsTimes[0] <= t - 1e3; )
+				this.fpsTimes.shift();
+			this.fpsTimes.push(t),
+			this.fps = this.fpsTimes.length,
+			this.fpsCounter.innerHTML = "Fps: " + this.fps;
+		},
         render() {
             this.ctx.clearRect(0, 0, innerWidth, innerHeight)
             this.drawESP()
+			this.drawFPS()
             requestAnimationFrame(this.render.bind(this))
         },
         onLoad() {
             window.playerInfos.style.width = "0%"
             hack.createCanvas()
+			hack.createFPSCounter()
         }
     }
     hack.onLoad()
