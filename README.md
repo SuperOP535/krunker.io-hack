@@ -1,4 +1,6 @@
 # krunker
+### Preview:
+![](https://i.imgur.com/bd1gjNS.png?raw=true)
 
 ### Requirements:
 - Tampermonkey
