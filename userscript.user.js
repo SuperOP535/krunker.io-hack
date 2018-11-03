@@ -3,7 +3,7 @@
 // @description  Krunker.io ESP Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.7
+// @version      1.8
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -360,7 +360,6 @@ GM_xmlhttpRequest({
             onload: res => {
                 let html = res.responseText
                 html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack()\n${code.toString()}`)
-                console.log(code)
                 document.open()
                 document.write(html)
                 document.close()
