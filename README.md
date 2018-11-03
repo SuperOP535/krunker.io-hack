@@ -1,4 +1,10 @@
-# krunker
+# Krunker.io Hack
+### Features:
+- Aimbot (thanks Tehchy for the PR)
+- FPS Counter
+- Tracers
+- ESP (aka. Wallhack)
+
 ### Requirements:
 - Tampermonkey
 
