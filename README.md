@@ -1,6 +1,6 @@
 # Krunker.io Hack
 ### Features:
-- Aimbot (thanks Tehchy for the PR)
+- Aimbot (thanks to William Thomson)
 - FPS Counter
 - Tracers
 - ESP (aka. Wallhack)
