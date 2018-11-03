@@ -31,7 +31,7 @@ class Hack {
         }
         this.active = {}
         this.settings = {
-            bhop: true,
+            bhop: false,
             fpsCounter: true,
             autoAim: true,
             autoAimToggle: false,
