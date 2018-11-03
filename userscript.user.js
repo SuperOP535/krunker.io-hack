@@ -40,9 +40,7 @@ class Hack {
             autoAimWalls: false,
             aimSettings: true,
         }
-        this.aimbot = {
-            initialized: false
-        }
+        this.aimbot = {initialized: false}
         this.onLoad()
     }
 
@@ -96,13 +94,6 @@ class Hack {
 
     getMyself() {
         return this.hooks.entities.find(x => x.isYou)
-    }
-
-    getDistance3D(x1, y1, z1, x2, y2, z2) {
-        const dx = x1 - x2
-        const dy = y1 - y2
-        const dz = z1 - z2
-        return Math.sqrt(dx * dx + dy * dy + dz * dz)
     }
 
     randFloat(t, e) {
@@ -230,7 +221,7 @@ class Hack {
         this.initialized = true
         this.changeSettings()
         this.camera.camLookAt = function(x, y, z) {
-            if (!x) return this.aimTarget = null
+            if (!x) return void(this.aimTarget = null)
             const a = self.getXDir(this.object.position.x, this.object.position.y, this.object.position.z, x, y, z)
             const h = self.getDirection(this.object.position.z, this.object.position.x, z, x)
             this.aimTarget = {
@@ -356,10 +347,10 @@ GM_xmlhttpRequest({
             .replace(/}else \w+\.style\.display="none"/, "")
             .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
-            .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+window\.hack\.hooks\.entities=\[\])/, "$1window.hack.hooks.world=$2")
+            .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+;window\.hack\.hooks\.entities=\[\])/, "$1;window.hack.hooks.world=$2")
             .replace(/(\w+\.style\.left=)100\*(\w+\.\w+)\+"%",/, '$1$2*innerWidth+"px",window.hack.hooks.entities[i].hookedX=$2*innerWidth,')
             .replace(/(\w+\.style\.top=)100\*\(1-(\w+\.\w+)\)\+"%",/, '$1(1-$2)*innerHeight+"px",window.hack.hooks.entities[i].hookedY=(1-$2)*innerHeight,')
-            .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2if($2.enabled')
+            .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
 
@@ -368,7 +359,8 @@ GM_xmlhttpRequest({
             url: "https://krunker.io/",
             onload: res => {
                 let html = res.responseText
-                html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack({})\n${code.toString()}`)
+                html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack()\n${code.toString()}`)
+                console.log(code)
                 document.open()
                 document.write(html)
                 document.close()
