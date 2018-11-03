@@ -7,9 +7,9 @@
 
 ### Requirements:
 - Tampermonkey
+- ES6 Support
 
 ### Userscript: https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-(If the above script doesn't work use this one: https://github.com/xF4b3r/krunker/raw/master/alternative.user.js)
 
 ### Collaborators:
 - William Thomson
