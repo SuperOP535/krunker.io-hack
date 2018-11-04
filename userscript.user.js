@@ -203,7 +203,6 @@ class Hack {
 	}
 	
 	keyDown(event){
-		console.log(event.key.toUpperCase());
 		switch (event.key.toUpperCase()) {
 			case 'B':
 				this.setSetting(2, this.settings.bhop ? false : true);
