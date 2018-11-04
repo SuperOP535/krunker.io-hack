@@ -31,6 +31,7 @@ class Hack {
         }
         this.active = {}
         this.settings = {
+			esp: true,
             bhop: false,
             fpsCounter: true,
             autoAim: true,
@@ -39,7 +40,9 @@ class Hack {
             autoAimUseWeaponRange: true,
             autoAimWalls: false,
             aimSettings: true,
+			noRecoil: false,
         }
+		this.settingsMenu = [];
         this.aimbot = {initialized: false}
         this.onLoad()
     }
@@ -80,6 +83,124 @@ class Hack {
         const ui = document.getElementById("gameUI")
         ui.appendChild(el, ui)
     }
+	
+	createMenu() {
+		var rh = document.getElementById('rightHolder');
+		rh.insertAdjacentHTML("beforeend", "<br/><a href='javascript:;' onmouseover=\"SOUND.play('tick_0',0.1)\" onclick='showWindow(window.windows.length);' class=\"menuLink\">Hacks</a>")
+		this.settingsMenu = [{
+			name: "No Recoil",
+			pre: "<div class='setHed'>Hacks</div>",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(0, this.checked)' " + (window.hack.settingsMenu[0].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.noRecoil = t
+			}
+		}, {
+			name: "ESP",
+			val: 1,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(1, this.checked)' " + (window.hack.settingsMenu[1].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.esp = t
+			}
+		}, {
+			name: "BHop",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(2, this.checked);' " + (window.hack.settingsMenu[2].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.behop = t
+			}
+		}, {
+			name: "Fps Counter",
+			val: 1,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(3, this.checked)' " + (window.hack.settingsMenu[3].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.fpsCounter = t;
+			}
+		}, {
+			name: "Auto Aim",
+			pre: "<div class='setHed'>Auto Aim Settings</div>",
+			val: 1,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(4, this.checked)' " + (window.hack.settingsMenu[4].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAim = t
+			}
+		}, {
+			name: "TriggerBot",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(5, this.checked);window.hack.setSetting(6, false);window.hack.setSetting(7, false)' " + (window.hack.settingsMenu[4].val ? (window.hack.settingsMenu[5].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAimMode = t ? 1 : (!t && !window.hack.settingsMenu[5].val && !window.hack.settingsMenu[6].val ? 0 : window.hack.settings.autoAimMode);
+			}
+		}, {
+			name: "Quickscoper",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(5, false);window.hack.setSetting(6, this.checked);window.hack.setSetting(7, false)' " + (window.hack.settingsMenu[4].val ? (window.hack.settingsMenu[6].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAimMode = t ? 2 : (!window.hack.settingsMenu[4].val && !t && !window.hack.settingsMenu[6].val ? 0 : window.hack.settings.autoAimMode);
+			}
+		}, {
+			name: "Manual Aim Assist",
+			val: 1,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(5, false);window.hack.setSetting(6, false);window.hack.setSetting(7, this.checked)' " + (window.hack.settingsMenu[4].val ? (window.hack.settingsMenu[7].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAimMode = t ? 3 : (!window.hack.settingsMenu[5].val && !window.hack.settingsMenu[6].val && !t? 0 : window.hack.settings.autoAimMode);
+			}
+		}, {
+			name: "Use Weapon Range",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(8, this.checked);' " + (window.hack.settingsMenu[4].val ? (window.hack.settingsMenu[8].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAimUseWeaponRange = t;
+			}
+		}, {
+			name: "Aim Through Walls",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(9, this.checked);' " + (window.hack.settingsMenu[4].val ? (window.hack.settingsMenu[9].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.autoAimWalls = t;
+			}
+		}, {
+			name: "Custom Aim Settings",
+			val: 0,
+			html: function () {
+				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(10, this.checked)' " + (window.hack.settingsMenu[10].val ? "checked" : "") + "><span class='slider'></span></label>"
+			},
+			set: function (t) {
+				window.hack.settings.aimSettings = t;
+				window.hack.changeSettings();
+			}
+		}];
+	}
+	
+	setupSettings() {
+		for (var i = 0; i < this.settingsMenu.length; ++i)
+			if (this.settingsMenu[i].set) {
+				var nt = this.getSavedVal("kro_set_hack_" + i);
+				this.settingsMenu[i].val = null !== nt ? nt : this.settingsMenu[i].val,
+				"false" == this.settingsMenu[i].val && (this.settingsMenu[i].val = !1),
+				this.settingsMenu[i].set(this.settingsMenu[i].val, !0)
+			}
+	}
 
     drawText(txt, font, color, x, y) {
         this.ctx.save()
@@ -209,6 +330,7 @@ class Hack {
         this.fpsTimes.push(now)
         this.fps = this.fpsTimes.length
         this.fpsCounter.innerHTML = `Fps: ${this.fps}`
+		this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
     }
 
     bhop() {
@@ -329,11 +451,29 @@ class Hack {
         this.updateAimbot()
     }
 
+	setSetting (t, e) {
+		document.getElementById("slid_hack" + t) && (document.getElementById("slid_hack" + t).innerHTML = e),
+		this.settingsMenu[t].set(e),
+		this.settingsMenu[t].val = e,
+		this.saveVal("kro_set_hack_" + t, e)
+	}
+
+	saveVal(t, e) {
+		var r = "undefined" != typeof Storage;
+		r && localStorage.setItem(t, e)
+	}
+
+	getSavedVal(t) {
+		var r = "undefined" != typeof Storage;
+		return r ? localStorage.getItem(t) : null
+	}
+
     onLoad() {
         this.active = this.settings
         window.playerInfos.style.width = "0%"
         this.createCanvas()
         this.createFPSCounter()
+		this.createMenu()
     }
 }
 
@@ -353,6 +493,8 @@ GM_xmlhttpRequest({
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
+			.replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function');
+
 
         GM_xmlhttpRequest({
             method: "GET",
