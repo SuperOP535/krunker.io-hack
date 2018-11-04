@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.0
+// @version      2.1
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -345,6 +345,14 @@ class Hack {
     }
 
     drawFPS() {
+		if (!this.settings.fpsCounter)
+		{
+			if (this.fpsCounter.innerHTML.length > 0)
+			{
+				this.fpsCounter.innerHTML = '';
+			}
+			return;
+		}
         const now = performance.now()
         for (; this.fpsTimes.length > 0 && this.fpsTimes[0] <= now - 1e3;) this.fpsTimes.shift()
         this.fpsTimes.push(now)
