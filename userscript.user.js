@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Krunker.io Public ESP Hack
-// @description  Krunker.io ESP Hack
+// @name         Krunker.io Hack
+// @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.8
+// @version      1.9
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
