@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.1
+// @version      2.2
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -522,7 +522,7 @@ GM_xmlhttpRequest({
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
 			.replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
-			.replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown", function ($1) { window.hack.keyDown($1),');
+			.replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){if(document.activeElement!=chatInput){window.hack.keyDown($1)}');
 
 
         GM_xmlhttpRequest({
