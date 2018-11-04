@@ -1,4 +1,6 @@
 # Krunker.io Hack
+** This is the only working krunker.io hack. It was made thanks to the collaborators named below and no one else. All the other scripts are a copy from this one (e.g: quake.pw (quake#5338), who copied this hack and claimed it as his hack)
+
 ### Features:
 - Aimbot
 - FPS Counter
