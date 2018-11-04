@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      1.9
+// @version      2.0
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -113,7 +113,7 @@ class Hack {
 				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(2, this.checked);' " + (window.hack.settingsMenu[2].val ? "checked" : "") + "><span class='slider'></span></label>"
 			},
 			set: function (t) {
-				window.hack.settings.behop = t
+				window.hack.settings.bhop = t
 			}
 		}, {
 			name: "Fps Counter",
@@ -200,6 +200,27 @@ class Hack {
 				"false" == this.settingsMenu[i].val && (this.settingsMenu[i].val = !1),
 				this.settingsMenu[i].set(this.settingsMenu[i].val, !0)
 			}
+	}
+	
+	keyDown(event){
+		console.log(event.key.toUpperCase());
+		switch (event.key.toUpperCase()) {
+			case 'B':
+				this.setSetting(2, this.settings.bhop ? false : true);
+				this.chatMessage(null, "<span style='color:#fff'>BHop</span> <span style='color:" + (this.settings.bhop ? 'green' : 'red') + "'>" + (this.settings.bhop ? 'Enabled' : 'Disabled') + "</span>", !0)
+				break;
+				
+			case 'T':
+				this.setSetting(4, this.settings.autoAim ? false : true);
+				this.chatMessage(null, "<span style='color:#fff'>AutoAim</span> <span style='color:" + (this.settings.autoAim ? 'green' : 'red') + "'>" + (this.settings.autoAim ? 'Enabled' : 'Disabled') + "</span>", !0)
+				break;
+		}
+	}
+	
+	chatMessage(t, e, n) {
+		var chatList = document.getElementById('chatList');
+		for (chatList.innerHTML += n ? "<div class='chatItem'><span class='chatMsg'>" + e + "</span></div><br/>" : "<div class='chatItem'>" + (t || "unknown") + ": <span class='chatMsg'>" + e + "</span></div><br/>"; chatList.scrollHeight >= 250; )
+			chatList.removeChild(chatList.childNodes[0])
 	}
 
     drawText(txt, font, color, x, y) {
@@ -493,7 +514,8 @@ GM_xmlhttpRequest({
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
-			.replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function');
+			.replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
+			.replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown", function ($1) { window.hack.keyDown($1),');
 
 
         GM_xmlhttpRequest({
