@@ -114,7 +114,7 @@ class Hack {
         let target = null
         let bestDist = this.getRange()
         for (const player of this.hooks.entities.filter(x => !x.isYou)) {
-            if ((player.notObstructed || this.settings.autoAimWalls) && player.active) {
+            if ((player.notObstr || this.settings.autoAimWalls) && player.active) {
                 if (this.me.team && this.me.team === player.team) continue
                 let dist = this.getDistance3D(this.me.x, this.me.y, this.me.z, player.x, player.y, player.z)
                 if (dist < bestDist) {
@@ -343,7 +343,7 @@ GM_xmlhttpRequest({
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
-            .replace(/if\(\w+\.notObstructed\){/, "")
+            .replace(/if\(\w+\.notObstr\){/, "")
             .replace(/}else \w+\.style\.display="none"/, "")
             .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
