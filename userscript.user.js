@@ -30,17 +30,19 @@ class Hack {
             config: null
         }
         this.settings = {
-			esp: true,
+            esp: true,
             bhop: false,
             fpsCounter: true,
             autoAim: 3,
             autoAimWalls: false,
             aimSettings: true,
-			noRecoil: true,
-			tracers: true,
+            noRecoil: true,
+            tracers: true,
         }
-		this.settingsMenu = [];
-        this.aimbot = {initialized: false}
+        this.settingsMenu = [];
+        this.aimbot = {
+            initialized: false
+        }
         this.onLoad()
     }
 
@@ -81,125 +83,121 @@ class Hack {
         ui.appendChild(el, ui)
     }
 
-	createMenu() {
-		var rh = document.getElementById('rightHolder');
-		rh.insertAdjacentHTML("beforeend", "<br/><a href='javascript:;' onmouseover=\"SOUND.play('tick_0',0.1)\" onclick='showWindow(window.windows.length);' class=\"menuLink\">Hacks</a>")
-		let self = this
-		this.settingsMenu = [{
-			name: "Show FPS",
-			pre: "<div class='setHed'>Render</div>",
-			val: 1,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(0, this.checked)' " + (self.settingsMenu[0].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.fpsCounter = t;
-			}
-		}, {
-			name: "Player ESP",
-			val: 1,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(1, this.checked)' " + (self.settingsMenu[1].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.esp = t
-			}
-		}, {
-			name: "Player Tracers",
-			val: 1,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(2, this.checked)' " + (self.settingsMenu[2].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.tracers = t;
-			}
-		}, {
-			name: "BHop",
-			pre: "<div class='setHed'>Movement</div>",
-			val: 0,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(3, this.checked);' " + (self.settingsMenu[3].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.bhop = t
-			}
-		}, {
-			name: "No Recoil",
-			pre: "<div class='setHed'>Combat</div>",
-			val: 0,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(4, this.checked)' " + (self.settingsMenu[4].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.noRecoil = t
-			}
-		}, {	
-			name: "Auto Aim",
-			val: 3,
-			html: function () {
-				return '<select onchange="window.hack.setSetting(5, this.value)">' +
-					'<option value="0"' + (self.settingsMenu[5].val == 0 ? " selected" : "") + '>Off</option>' +
-					'<option value="1"' + (self.settingsMenu[5].val == 1 ? " selected" : "") + '>TriggerBot</option>' +
-					'<option value="2"' + (self.settingsMenu[5].val == 2 ? " selected" : "") + '>Quickscoper</option>' +
-					'<option value="3"' + (self.settingsMenu[5].val == 3 ? " selected" : "") + '>Manual</option></select>'
-			},
-			set: function (t) {
-				self.settings.autoAim = parseInt(t)
-			}
-		}, {
-			name: "Aim Through Walls",
-			val: 0,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(6, this.checked);' " + (self.settingsMenu[5].val ? (self.settingsMenu[6].val ? "checked" : "") : "disabled") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.autoAimWalls = t;
-			}
-		}, {
-			name: "Custom Aim Settings",
-			val: 0,
-			html: function () {
-				return "<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(7, this.checked)' " + (self.settingsMenu[7].val ? "checked" : "") + "><span class='slider'></span></label>"
-			},
-			set: function (t) {
-				self.settings.aimSettings = t;
-				self.changeSettings();
-			}
-		}];
-	}
+    createMenu() {
+        const rh = document.getElementById('rightHolder');
+        rh.insertAdjacentHTML("beforeend", "<br/><a href='javascript:;' onmouseover=\"SOUND.play('tick_0',0.1)\" onclick='showWindow(window.windows.length);' class=\"menuLink\">Hacks</a>")
+        let self = this
+        this.settingsMenu = [{
+            name: "Show FPS",
+            pre: "<div class='setHed'>Render</div>",
+            val: 1,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(0, this.checked)' ${self.settingsMenu[0].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.fpsCounter = t;
+            }
+        }, {
+            name: "Player ESP",
+            val: 1,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(1, this.checked)' ${self.settingsMenu[1].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.esp = t
+            }
+        }, {
+            name: "Player Tracers",
+            val: 1,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(2, this.checked)' ${self.settingsMenu[2].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.tracers = t;
+            }
+        }, {
+            name: "BHop",
+            pre: "<div class='setHed'>Movement</div>",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(3, this.checked);' ${self.settingsMenu[3].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.bhop = t
+            }
+        }, {
+            name: "No Recoil",
+            pre: "<div class='setHed'>Combat</div>",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(4, this.checked)' ${self.settingsMenu[4].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.noRecoil = t
+            }
+        }, {
+            name: "Auto Aim",
+            val: 3,
+            html() {
+                return `<select onchange="window.hack.setSetting(5, this.value)"><option value="0"${self.settingsMenu[5].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[5].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu[5].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu[5].val == 3 ? " selected" : ""}>Manual</option></select>`
+            },
+            set(t) {
+                self.settings.autoAim = parseInt(t)
+            }
+        }, {
+            name: "Aim Through Walls",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(6, this.checked);' ${self.settingsMenu[5].val ? (self.settingsMenu[6].val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.autoAimWalls = t;
+            }
+        }, {
+            name: "Custom Aim Settings",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(7, this.checked)' ${self.settingsMenu[7].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.aimSettings = t;
+                self.changeSettings();
+            }
+        }];
+    }
 
-	setupSettings() {
-		for (var i = 0; i < this.settingsMenu.length; ++i)
-			if (this.settingsMenu[i].set) {
-				var nt = this.getSavedVal("kro_set_hack_" + i);
-				this.settingsMenu[i].val = null !== nt ? nt : this.settingsMenu[i].val,
-				"false" == this.settingsMenu[i].val && (this.settingsMenu[i].val = !1),
-				this.settingsMenu[i].set(this.settingsMenu[i].val, !0)
-			}
-	}
+    setupSettings() {
+        for (let i = 0; i < this.settingsMenu.length; ++i)
+            if (this.settingsMenu[i].set) {
+                const nt = this.getSavedVal(`kro_set_hack_${i}`);
+                this.settingsMenu[i].val = null !== nt ? nt : this.settingsMenu[i].val,
+                    "false" == this.settingsMenu[i].val && (this.settingsMenu[i].val = !1),
+                    this.settingsMenu[i].set(this.settingsMenu[i].val, !0)
+            }
+    }
 
-	keyDown(event){
-		switch (event.key.toUpperCase()) {
-			case 'B':
-				this.setSetting(3, this.settings.bhop ? false : true);
-				this.chatMessage(null, "<span style='color:#fff'>BHop - </span> <span style='color:" + (this.settings.bhop ? 'green' : 'red') + "'>" + (this.settings.bhop ? 'Enabled' : 'Disabled') + "</span>", !0)
-				break;
+    keyDown(event) {
+        switch (event.key.toUpperCase()) {
+            case 'B':
+                this.setSetting(3, this.settings.bhop ? false : true);
+                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop ? 'green' : 'red'}'>${this.settings.bhop ? 'Enabled' : 'Disabled'}</span>`, !0)
+                break;
 
-			case 'T':
-				this.settings.autoAim++;
-				if (this.settings.autoAim > 3) this.settings.autoAim = 0
-				this.setSetting(5, this.settings.autoAim);
-				var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
-				this.chatMessage(null, "<span style='color:#fff'>AutoAim - </span> <span style='color:" + (this.settings.autoAim > 0 ? 'green' : 'red') + "'>" + n + "</span>", !0)
-				break;
-		}
-	}
+            case 'T':
+                this.settings.autoAim++;
+                if (this.settings.autoAim > 3) this.settings.autoAim = 0
+                this.setSetting(5, this.settings.autoAim);
+                const n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
+                this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                break;
+        }
+    }
 
-	chatMessage(t, e, n) {
-		var chatList = document.getElementById('chatList');
-		for (chatList.innerHTML += n ? "<div class='chatItem'><span class='chatMsg'>" + e + "</span></div><br/>" : "<div class='chatItem'>" + (t || "unknown") + ": <span class='chatMsg'>" + e + "</span></div><br/>"; chatList.scrollHeight >= 250; )
-			chatList.removeChild(chatList.childNodes[0])
-	}
+    chatMessage(t, e, n) {
+        const chatList = document.getElementById('chatList');
+        for (chatList.innerHTML += n ? `<div class='chatItem'><span class='chatMsg'>${e}</span></div><br/>` : `<div class='chatItem'>${t || "unknown"}: <span class='chatMsg'>${e}</span></div><br/>`; chatList.scrollHeight >= 250;)
+            chatList.removeChild(chatList.childNodes[0])
+    }
 
     drawText(txt, font, color, x, y) {
         this.ctx.save()
@@ -267,84 +265,80 @@ class Hack {
                     const targetY = entity.hookedY + 60 * scale
                     const offsetX = 80
                     const offsetY = 180
-				
 
-					if (this.settings.esp)
-					{
-						this.ctx.save()
-						this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-						this.ctx.beginPath()
-						this.ctx.fillStyle = "red"
-						this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
-						this.ctx.stroke()
-						this.ctx.closePath()
-						this.ctx.restore()
 
-						this.ctx.save()
-						this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-						this.ctx.beginPath()
-						this.ctx.fillStyle = "green"
-						this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
-						this.ctx.fill()
-						this.ctx.closePath()
-						this.ctx.restore()
+                    if (this.settings.esp) {
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
+                        this.ctx.stroke()
+                        this.ctx.closePath()
+                        this.ctx.restore()
 
-						this.ctx.save()
-						this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-						this.ctx.beginPath()
-						this.ctx.fillStyle = "red"
-						this.ctx.rect(0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale)
-						this.ctx.fill()
-						this.ctx.closePath()
-						this.ctx.restore()
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "green"
+                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
+                        this.ctx.fill()
+                        this.ctx.closePath()
+                        this.ctx.restore()
 
-						this.ctx.save()
-						this.ctx.translate(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2))
-						this.ctx.beginPath()
-						this.ctx.fillStyle = "red"
-						this.ctx.rect(0, 0, offsetX * scale, offsetY * scale)
-						this.ctx.stroke()
-						this.ctx.closePath()
-						this.ctx.restore()
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale)
+                        this.ctx.fill()
+                        this.ctx.closePath()
+                        this.ctx.restore()
 
-						const fontSize = 26 * scale > 13 ? 13 : 26 * scale
-						this.drawText(`Name: ${entity.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
-						this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
-						this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
-						this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
-						this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
-					}
-				
-					if (this.settings.tracers)
-					{
-						this.ctx.save()
-						this.ctx.lineWidth = 2
-						this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
-						this.ctx.moveTo(innerWidth / 2, innerHeight - 1)
-						this.ctx.lineTo(targetX, targetY)
-						this.ctx.stroke()
-						this.ctx.restore()
-					}
+                        this.ctx.save()
+                        this.ctx.translate(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2))
+                        this.ctx.beginPath()
+                        this.ctx.fillStyle = "red"
+                        this.ctx.rect(0, 0, offsetX * scale, offsetY * scale)
+                        this.ctx.stroke()
+                        this.ctx.closePath()
+                        this.ctx.restore()
+
+                        const fontSize = 26 * scale > 13 ? 13 : 26 * scale
+                        this.drawText(`Name: ${entity.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
+                        this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
+                        this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
+                        this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
+                        this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+                    }
+
+                    if (this.settings.tracers) {
+                        this.ctx.save()
+                        this.ctx.lineWidth = 2
+                        this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
+                        this.ctx.moveTo(innerWidth / 2, innerHeight - 1)
+                        this.ctx.lineTo(targetX, targetY)
+                        this.ctx.stroke()
+                        this.ctx.restore()
+                    }
                 }
             }
         }
     }
 
     drawFPS() {
-		if (!this.settings.fpsCounter)
-		{
-			if (this.fpsCounter.innerHTML.length > 0)
-			{
-				this.fpsCounter.innerHTML = '';
-			}
-			return;
-		}
+        if (!this.settings.fpsCounter) {
+            if (this.fpsCounter.innerHTML.length > 0) {
+                this.fpsCounter.innerHTML = '';
+            }
+            return;
+        }
         const now = performance.now()
         for (; this.fpsTimes.length > 0 && this.fpsTimes[0] <= now - 1e3;) this.fpsTimes.shift()
         this.fpsTimes.push(now)
         this.fps = this.fpsTimes.length
         this.fpsCounter.innerHTML = `FPS: ${this.fps}`
-		this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
+        this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
     }
 
     bhop() {
@@ -352,13 +346,13 @@ class Hack {
         if (this.camera.keys && this.camera.moveDir !== null) this.camera.keys[this.camera.jumpKey] = !this.camera.keys[this.camera.jumpKey]
     }
 
-	noRecoil() { 
-		if (!this.settings.noRecoil) return;
-		this.inputs[3] = ((this.camera.pitchObject.rotation.x - this.me.recoilAnimY * this.hooks.config.recoilMlt) % Math.PI2).round(3);
-		this.me.recoilAnimYOld = this.me.recoilAnimY;
-		this.me.recoilAnimY = 0;
-	}
-	
+    noRecoil() {
+        if (!this.settings.noRecoil) return;
+        this.inputs[3] = ((this.camera.pitchObject.rotation.x - this.me.recoilAnimY * this.hooks.config.recoilMlt) % Math.PI2).round(3);
+        this.me.recoilAnimYOld = this.me.recoilAnimY;
+        this.me.recoilAnimY = 0;
+    }
+
     initAimbot() {
         let self = this
         this.initialized = true
@@ -467,31 +461,31 @@ class Hack {
         this.inputs = inputs
         this.bhop()
         this.updateAimbot()
-		this.noRecoil()
+        this.noRecoil()
     }
 
-	setSetting (t, e) {
-		document.getElementById("slid_hack" + t) && (document.getElementById("slid_hack" + t).innerHTML = e),
-		this.settingsMenu[t].set(e),
-		this.settingsMenu[t].val = e,
-		this.saveVal("kro_set_hack_" + t, e)
-	}
+    setSetting(t, e) {
+        document.getElementById(`slid_hack${t}`) && (document.getElementById(`slid_hack${t}`).innerHTML = e),
+            this.settingsMenu[t].set(e),
+            this.settingsMenu[t].val = e,
+            this.saveVal(`kro_set_hack_${t}`, e)
+    }
 
-	saveVal(t, e) {
-		var r = "undefined" != typeof Storage;
-		r && localStorage.setItem(t, e)
-	}
+    saveVal(t, e) {
+        const r = "undefined" != typeof Storage;
+        r && localStorage.setItem(t, e)
+    }
 
-	getSavedVal(t) {
-		var r = "undefined" != typeof Storage;
-		return r ? localStorage.getItem(t) : null
-	}
+    getSavedVal(t) {
+        const r = "undefined" != typeof Storage;
+        return r ? localStorage.getItem(t) : null
+    }
 
     onLoad() {
         window.playerInfos.style.width = "0%"
         this.createCanvas()
         this.createFPSCounter()
-		this.createMenu()
+        this.createMenu()
     }
 }
 
@@ -511,8 +505,8 @@ GM_xmlhttpRequest({
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
-			.replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
-			.replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){if(document.activeElement!=chatInput){window.hack.keyDown($1)}');
+            .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
+            .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){if(document.activeElement!=chatInput){window.hack.keyDown($1)}');
 
 
         GM_xmlhttpRequest({
