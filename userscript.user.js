@@ -74,7 +74,7 @@ class Hack {
         el.id = "fpsCounter"
         el.style.position = "absolute"
         el.style.color = "white"
-        el.style.top = "0px"
+        el.style.top = "0.4em"
         el.style.left = "20px"
         el.style.fontSize = "smaller"
         el.innerHTML = `FPS: ${this.fps}`
