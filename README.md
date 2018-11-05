@@ -6,6 +6,8 @@
 - FPS Counter
 - Tracers
 - ESP (aka. Wallhack)
+- BHop
+- NoRecoil
 
 ### Requirements:
 - Tampermonkey
