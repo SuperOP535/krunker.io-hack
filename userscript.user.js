@@ -57,10 +57,10 @@ class Hack {
         const hookedCanvas = document.createElement("canvas")
         hookedCanvas.width = innerWidth
         hookedCanvas.height = innerHeight
-        window.onresize = () => {
+        window.addEventListener('resize', () => {
             hookedCanvas.width = innerWidth
             hookedCanvas.height = innerHeight
-        }
+        });
         this.canvas = hookedCanvas
         this.ctx = hookedCanvas.getContext("2d")
         const hookedUI = document.getElementById("inGameUI")
