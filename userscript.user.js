@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.3
+// @version      2.4
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -89,7 +89,7 @@ class Hack {
         let self = this
         this.settingsMenu = [{
             name: "Show FPS",
-            pre: "<div class='setHed'>Render</div>",
+            pre: "<div class='setHed'><center>Hack Settings</center></div><div class='setHed'>Render</div>",
             val: 1,
             html() {
                 return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(0, this.checked)' ${self.settingsMenu[0].val ? "checked" : ""}><span class='slider'></span></label>`
@@ -226,6 +226,10 @@ class Hack {
         const o = Math.abs(n - a)
         const c = this.getDistance3D(e, n, r, i, a, s)
         return Math.asin(o / c) * (n > a ? -1 : 1)
+    }
+    
+    getAngleDist(t, e) {
+        return Math.atan2(Math.sin(e - t), Math.cos(t - e))
     }
 
     getTarget() {
