@@ -1,4 +1,8 @@
 # Krunker.io Hack
+### Scammers and people who stole this script (don't install their scripts as they're all outdated and stolen, thanks!):
+- qHook, quake
+- jabbidle
+
 ### Features:
 - Aimbot
 - FPS Counter
