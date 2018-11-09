@@ -3,9 +3,9 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.9
+// @version      2.10
 // @author       Faber, collaborators: William Thomson, Tehchy
-// @match        *://krunker.io/*
+// @include      /^(https|http):\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
