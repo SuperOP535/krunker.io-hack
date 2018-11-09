@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.4
+// @version      2.5
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -31,7 +31,8 @@ class Hack {
         }
         this.settings = {
             esp: true,
-            bhop: false,
+            bhop: 0,
+            bhopHeld: false,
             fpsCounter: true,
             autoAim: 3,
             autoAimWalls: false,
@@ -120,10 +121,10 @@ class Hack {
             pre: "<div class='setHed'>Movement</div>",
             val: 0,
             html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(3, this.checked);' ${self.settingsMenu[3].val ? "checked" : ""}><span class='slider'></span></label>`
+                return `<select onchange="window.hack.setSetting(3, this.value)"><option value="0"${self.settingsMenu[3].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[3].val == 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu[3].val == 2 ? " selected" : ""}>Manual</option></select>`
             },
             set(t) {
-                self.settings.bhop = t
+                self.settings.bhop = parseInt(t)
             }
         }, {
             name: "No Recoil",
@@ -179,16 +180,34 @@ class Hack {
     keyDown(event) {
         switch (event.key.toUpperCase()) {
             case 'B':
-                this.setSetting(3, this.settings.bhop ? false : true);
-                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop ? 'green' : 'red'}'>${this.settings.bhop ? 'Enabled' : 'Disabled'}</span>`, !0)
+                this.settings.bhop++;
+                if (this.settings.bhop > 2) this.settings.bhop = 0
+                this.setSetting(3, this.settings.bhop);
+                var n = this.settings.bhop == 0 ? 'Disabled' : (this.settings.bhop == 2 ? 'Manual' : 'Automatic');
+                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
 
             case 'T':
                 this.settings.autoAim++;
                 if (this.settings.autoAim > 3) this.settings.autoAim = 0
                 this.setSetting(5, this.settings.autoAim);
-                const n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
+                var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                break;
+                
+            case ' ': 
+                if (this.settings.bhop !== 2) return;
+                this.settings.bhopHeld = true;
+                break;
+        }
+    }
+    
+    keyUp(event) {
+        console.log(event);
+        switch (event.key.toUpperCase()) {
+            case ' ': 
+                if (this.settings.bhop !== 2) return;
+                this.settings.bhopHeld = false;
                 break;
         }
     }
@@ -346,8 +365,8 @@ class Hack {
     }
 
     bhop() {
-        if (!this.settings.bhop) return
-        if (this.camera.keys && this.camera.moveDir !== null) this.camera.keys[this.camera.jumpKey] = !this.camera.keys[this.camera.jumpKey]
+        if (this.settings.bhop === 0) return
+        if ((this.settings.bhop === 1 && this.camera.keys && this.camera.moveDir !== null) || (this.settings.bhop === 2 && this.settings.bhopHeld)) this.camera.keys[this.camera.jumpKey] = !this.camera.keys[this.camera.jumpKey]
     }
 
     noRecoil() {
@@ -510,7 +529,8 @@ GM_xmlhttpRequest({
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
             .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
-            .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){if(document.activeElement!=chatInput){window.hack.keyDown($1)}');
+            .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){if(document.activeElement!=chatInput){window.hack.keyDown($1)}')
+            .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){if(document.activeElement!=chatInput){window.hack.keyUp($1)}');
 
 
         GM_xmlhttpRequest({
