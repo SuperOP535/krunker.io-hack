@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.8
+// @version      2.9
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -437,8 +437,9 @@ class Hack {
         const target = this.getTarget()
         if (target) {
             if (this.settings.autoAim === 3 && this.me.aimVal === 1) return void this.camera.camLookAt(null)
+            target.y += this.hooks.config.playerHeight - this.hooks.config.cameraHeight - this.hooks.config.crouchDst * target.crouchVal
             target.y -= (this.me.recoilAnimY * this.hooks.config.recoilMlt) * 25
-            this.camera.camLookAt(target.x, target.y + target.height - ((this.hooks.config.headScale / 3) * 2) - (this.hooks.config.crouchDst * target.crouchVal), target.z)
+            this.camera.camLookAt(target.x, target.y, target.z)
             if (this.settings.autoAim === 1) {
                 if (this.camera.mouseDownR !== 1) {
                     this.camera.mouseDownR = 1
