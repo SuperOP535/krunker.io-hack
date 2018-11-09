@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.7
+// @version      2.8
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -39,6 +39,7 @@ class Hack {
             aimSettings: true,
             noRecoil: true,
             tracers: true,
+            autoRespawn: false,
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -163,6 +164,15 @@ class Hack {
             set(t) {
                 self.settings.aimSettings = t;
                 self.changeSettings();
+            }
+        }, {
+            name: "Auto Respawn",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(8, this.checked)' ${self.settingsMenu[8].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.autoRespawn = t;
             }
         }];
     }
@@ -374,6 +384,11 @@ class Hack {
         this.me.recoilAnimYOld = this.me.recoilAnimY;
         this.me.recoilAnimY = 0;
     }
+    
+    autoRespawn() {
+        if (!this.settings.autoRespawn) return
+        if (this.me && this.me.y == undefined && !document.pointerLockElement) this.camera.toggle(true)
+    }
 
     initAimbot() {
         let self = this
@@ -473,6 +488,7 @@ class Hack {
         this.ctx.clearRect(0, 0, innerWidth, innerHeight)
         this.drawESP()
         this.drawFPS()
+        this.autoRespawn()
         requestAnimationFrame(this.render.bind(this))
     }
 
