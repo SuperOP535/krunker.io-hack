@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.5
+// @version      2.6
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @match        *://krunker.io/*
 // @grant        GM_xmlhttpRequest
@@ -203,7 +203,6 @@ class Hack {
     }
     
     keyUp(event) {
-        console.log(event);
         switch (event.key.toUpperCase()) {
             case ' ': 
                 if (this.settings.bhop !== 2) return;
