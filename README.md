@@ -10,6 +10,7 @@
 - ESP (aka. Wallhack)
 - BHop
 - NoRecoil
+- Auto Respawn
 
 ### Requirements:
 - Tampermonkey
