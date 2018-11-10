@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.10
+// @version      2.11
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @include      /^(https|http):\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -204,17 +204,17 @@ class Hack {
                 var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
-                
-            case ' ': 
+
+            case ' ':
                 if (this.settings.bhop !== 2) return;
                 this.settings.bhopHeld = true;
                 break;
         }
     }
-    
+
     keyUp(event) {
         switch (event.key.toUpperCase()) {
-            case ' ': 
+            case ' ':
                 if (this.settings.bhop !== 2) return;
                 this.settings.bhopHeld = false;
                 break;
@@ -255,7 +255,7 @@ class Hack {
         const c = this.getDistance3D(e, n, r, i, a, s)
         return Math.asin(o / c) * (n > a ? -1 : 1)
     }
-    
+
     getAngleDist(t, e) {
         return Math.atan2(Math.sin(e - t), Math.cos(t - e))
     }
@@ -264,7 +264,7 @@ class Hack {
         let target = null
         let bestDist = this.getRange()
         for (const player of this.hooks.entities.filter(x => !x.isYou)) {
-            if ((player.notObstr || this.settings.autoAimWalls) && player.active) {
+            if ((player.notObst || this.settings.autoAimWalls) && player.active) {
                 if (this.me.team && this.me.team === player.team) continue
                 let dist = this.getDistance3D(this.me.x, this.me.y, this.me.z, player.x, player.y, player.z)
                 if (dist < bestDist) {
@@ -384,7 +384,7 @@ class Hack {
         this.me.recoilAnimYOld = this.me.recoilAnimY;
         this.me.recoilAnimY = 0;
     }
-    
+
     autoRespawn() {
         if (!this.settings.autoRespawn) return
         if (this.me && this.me.y == undefined && !document.pointerLockElement) this.camera.toggle(true)
@@ -534,11 +534,11 @@ GM_xmlhttpRequest({
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
-            .replace(/if\(\w+\.notObstr\){/, "")
-            .replace(/}else \w+\.style\.display="none"/, "")
+            .replace(/if\(\w+\.notObst\){/, "if(true){")
+            .replace(/}else \w+\.style\.display="none"/, "}")
             .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
-            .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+;window\.hack\.hooks\.entities=\[\])/, "$1;window.hack.hooks.world=$2")
+            .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+,\w+;window\.hack\.hooks\.entities=\[\])/, "$1;window.hack.hooks.world=$2")
             .replace(/(\w+\.style\.left=)100\*(\w+\.\w+)\+"%",/, '$1$2*innerWidth+"px",window.hack.hooks.entities[i].hookedX=$2*innerWidth,')
             .replace(/(\w+\.style\.top=)100\*\(1-(\w+\.\w+)\)\+"%",/, '$1(1-$2)*innerHeight+"px",window.hack.hooks.entities[i].hookedY=(1-$2)*innerHeight,')
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
@@ -555,7 +555,7 @@ GM_xmlhttpRequest({
             url: "https://krunker.io/",
             onload: res => {
                 let html = res.responseText
-                html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack()\n${code.toString()}`)
+                html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`)
                 document.open()
                 document.write(html)
                 document.close()
