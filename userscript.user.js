@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.11
+// @version      2.12
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @include      /^(https|http):\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -141,7 +141,7 @@ class Hack {
             name: "Auto Aim",
             val: 3,
             html() {
-                return `<select onchange="window.hack.setSetting(5, this.value)"><option value="0"${self.settingsMenu[5].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[5].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu[5].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu[5].val == 3 ? " selected" : ""}>Manual</option></select>`
+                return `<select onchange="window.hack.setSetting(5, this.value)"><option value="0"${self.settingsMenu[5].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[5].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu[5].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu[5].val == 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu[5].val == 4 ? " selected" : ""}>Hip Fire</option></select>`
             },
             set(t) {
                 self.settings.autoAim = parseInt(t)
@@ -199,9 +199,9 @@ class Hack {
 
             case 'T':
                 this.settings.autoAim++;
-                if (this.settings.autoAim > 3) this.settings.autoAim = 0
+                if (this.settings.autoAim > 4) this.settings.autoAim = 0
                 this.setSetting(5, this.settings.autoAim);
-                var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot'));
+                var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 4 ? 'Hip Fire' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot')));
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
 
@@ -347,6 +347,7 @@ class Hack {
                     if (this.settings.tracers) {
                         this.ctx.save()
                         this.ctx.lineWidth = 2
+                        this.ctx.beginPath()
                         this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
                         this.ctx.moveTo(innerWidth / 2, innerHeight - 1)
                         this.ctx.lineTo(targetX, targetY)
@@ -436,7 +437,7 @@ class Hack {
         if (!this.initialized) this.initAimbot()
         const target = this.getTarget()
         if (target) {
-            if (this.settings.autoAim === 3 && this.me.aimVal === 1) return void this.camera.camLookAt(null)
+            if ((this.settings.autoAim === 3 && this.me.aimVal === 1) || (this.settings.autoAim === 4 && this.me.aimVal === 0)) return void this.camera.camLookAt(null)
             target.y += this.hooks.config.playerHeight - this.hooks.config.cameraHeight - this.hooks.config.crouchDst * target.crouchVal
             target.y -= (this.me.recoilAnimY * this.hooks.config.recoilMlt) * 25
             this.camera.camLookAt(target.x, target.y, target.z)
