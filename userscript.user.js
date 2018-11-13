@@ -45,6 +45,8 @@ class Hack {
         this.aimbot = {
             initialized: false
         }
+        this.flag = new Image()
+        this.flag.src = "./textures/objective_1.png"
         this.onLoad()
     }
 
@@ -375,6 +377,17 @@ class Hack {
         this.fpsCounter.innerHTML = `FPS: ${this.fps}`
         this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
     }
+    
+    drawFlag() {
+        if (window.objectiveIcon && window.objectiveIcon.style.display === "inline-block") {
+            this.ctx.save()
+            this.ctx.translate(parseFloat(window.objectiveIcon.style.left) / 100 * innerWidth, parseFloat(window.objectiveIcon.style.top) / 100 * innerHeight)
+            this.ctx.beginPath()
+            this.ctx.drawImage(this.flag, 0, 0, parseFloat(window.objectiveIcon.style.width), parseFloat(window.objectiveIcon.style.height))
+            this.ctx.closePath()
+            this.ctx.restore()
+        }
+    }
 
     bhop() {
         if (this.settings.bhop === 0) return
@@ -492,6 +505,7 @@ class Hack {
         this.ctx.clearRect(0, 0, innerWidth, innerHeight)
         this.drawESP()
         this.drawFPS()
+        this.drawFlag()
         this.autoRespawn()
         requestAnimationFrame(this.render.bind(this))
     }
