@@ -5,7 +5,7 @@
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @version      2.14
 // @author       Faber, collaborators: William Thomson, Tehchy
-// @include      /^(https|http):\/\/krunker\.io(|\/|\/\?server=.+)$/
+// @include      /^https?:\/\/krunker\.io(|\/|\/\?server=\d+\.\d+\.\d+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
