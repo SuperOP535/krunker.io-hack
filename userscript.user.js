@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.14
+// @version      2.15
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @include      /^https?:\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -564,7 +564,7 @@ GM_xmlhttpRequest({
             .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
             .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){window.hack.keyDown($1),')
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
-            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==menuHolder\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" == menuHolder.style.display');
+            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" == nukeFlash.style.display');
 
 
         GM_xmlhttpRequest({
