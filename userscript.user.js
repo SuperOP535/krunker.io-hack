@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.15
+// @version      2.16
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @include      /^https?:\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -40,6 +40,7 @@ class Hack {
             noRecoil: true,
             tracers: true,
             autoRespawn: false,
+            autoSwap: false,
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -175,6 +176,15 @@ class Hack {
             },
             set(t) {
                 self.settings.autoRespawn = t;
+            }
+        }, {
+            name: "Auto Weapon Swap",
+            val: 0,
+            html() {
+                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(9, this.checked)' ${self.settingsMenu[9].val ? "checked" : ""}><span class='slider'></span></label>`
+            },
+            set(t) {
+                self.settings.autoSwap = t;
             }
         }];
     }
@@ -406,6 +416,14 @@ class Hack {
         if (this.me && this.me.y == undefined && !document.pointerLockElement) this.camera.toggle(true)
     }
 
+    autoSwap() {
+        if (!this.settings.autoSwap || !this.me.weapon.ammo || this.me.ammos.length < 2) return
+        if (this.me.ammos[this.me.weaponIndex] == 0 && this.me.ammos[0] != this.me.ammos[1])
+        {
+            this.inputs[10] = 1;
+        }
+    }
+
     initAimbot() {
         let self = this
         this.initialized = true
@@ -518,6 +536,7 @@ class Hack {
         this.bhop()
         this.updateAimbot()
         this.noRecoil()
+        this.autoSwap()
     }
 
     setSetting(t, e) {

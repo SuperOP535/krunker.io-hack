@@ -4,13 +4,18 @@
 - jabbidle
 
 ### Features:
-- Aimbot
+- Aimbot (Triggerbot, Quickscoper, Manual, Hip fire)
 - FPS Counter
-- Tracers
-- ESP (aka. Wallhack)
-- BHop
+- Player Tracers
+- Player ESP (aka. Wallhack)
+- BHop (Automatic, Manual)
 - NoRecoil
 - Auto Respawn
+- Auto Weapon Swap
+
+## KeyBinds:
+- T: Toggle Between Aimbot Modes
+- B: Toggle Between BHop Modes
 
 ### Requirements:
 - Tampermonkey
