@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      2.16
+// @version      3.0
 // @author       Faber, collaborators: William Thomson, Tehchy
 // @include      /^https?:\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -29,8 +29,10 @@ class Hack {
             context: null,
             config: null
         }
+        this.colors = ['Green', 'Orange', 'DodgerBlue', 'Black', 'Red'];
         this.settings = {
-            esp: true,
+            esp: 1,
+            espColor: 0,
             bhop: 0,
             bhopHeld: false,
             fpsCounter: true,
@@ -107,10 +109,19 @@ class Hack {
                 name: "Player ESP",
                 val: 1,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("esp", this.checked)' ${self.settingsMenu["esp"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<select onchange="window.hack.setSetting("esp", this.value)"><option value="0"${self.settingsMenu["esp"].val == 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu["esp"].val == 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu["esp"].val == 2 ? " selected" : ""}>Outline Only</option></select>`
                 },
                 set(t) {
-                    self.settings.esp = t
+                    self.settings.esp = parseInt(t)
+                }
+            }, espColor: {
+                name: "Player ESP Color",
+                val: 0,
+                html() {
+                    return `<select onchange="window.hack.setSetting("espColor", this.value)"><option value="0"${self.settingsMenu["espColor"].val == 0 ? " selected" : ""}>Green</option><option value="1"${self.settingsMenu["espColor"].val == 1 ? " selected" : ""}>Orange</option><option value="2"${self.settingsMenu["espColor"].val == 2 ? " selected" : ""}>DodgerBlue</option><option value="3"${self.settingsMenu["espColor"].val == 3 ? " selected" : ""}>Black</option><option value="4"${self.settingsMenu["espColor"].val == 4 ? " selected" : ""}>Red</option></select>`
+                },
+                set(t) {
+                    self.settings.espColor = parseInt(t)
                 }
             }, tracers: {
                 name: "Player Tracers",
@@ -220,6 +231,22 @@ class Hack {
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
 
+           case 'Y':
+                this.settings.esp++;
+                if (this.settings.esp > 2) this.settings.esp = 0
+                this.setSetting('esp', this.settings.esp);
+                var n = this.settings.esp == 0 ? 'Disabled' : (this.settings.esp == 2 ? 'Outline Only' : 'Full');
+                this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                break;
+
+           case 'U':
+                this.settings.espColor++;
+                if (this.settings.espColor > 4) this.settings.espColor = 0
+                this.setSetting('espColor', this.settings.espColor);
+                var n = this.colors[this.settings.espColor];
+                this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${n.toLowerCase()}'>${n}</span>`, !0)
+                break;
+
             case ' ':
                 if (this.settings.bhop !== 2) return;
                 this.settings.bhopHeld = true;
@@ -313,9 +340,10 @@ class Hack {
                     const targetY = entity.hookedY + 60 * scale
                     const offsetX = 80
                     const offsetY = 180
-
-
-                    if (this.settings.esp) {
+                    const color = this.colors[this.settings.espColor]
+                    
+                    if (this.settings.esp > 0) {
+                        this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
                         this.ctx.save()
                         this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
                         this.ctx.beginPath()
@@ -351,13 +379,15 @@ class Hack {
                         this.ctx.stroke()
                         this.ctx.closePath()
                         this.ctx.restore()
-
-                        const fontSize = 26 * scale > 13 ? 13 : 26 * scale
-                        this.drawText(`Name: ${entity.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
-                        this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
-                        this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
-                        this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
-                        this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, "green", targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+                        
+                        if (this.settings.esp == 1) {
+                            const fontSize = 26 * scale > 13 ? 13 : 26 * scale
+                            this.drawText(`Name: ${entity.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
+                            this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
+                            this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
+                            this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
+                            this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+                        }
                     }
 
                     if (this.settings.tracers) {
