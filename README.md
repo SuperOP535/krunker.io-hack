@@ -7,15 +7,17 @@
 - Aimbot (Triggerbot, Quickscoper, Manual, Hip fire)
 - FPS Counter
 - Player Tracers
-- Player ESP (aka. Wallhack)
+- Player ESP (aka. Wallhack) (Full, Outline Only) (Changeable Colors)
 - BHop (Automatic, Manual)
 - NoRecoil
 - Auto Respawn
 - Auto Weapon Swap
 
 ## KeyBinds:
-- T: Toggle Between Aimbot Modes
-- B: Toggle Between BHop Modes
+- T: Cycle Through Aimbot Modes
+- B: Cycle Through BHop Modes
+- Y: Cycle Through Player ESP Modes
+- U: Cycle Through Player ESP Colors
 
 ### Requirements:
 - Tampermonkey
