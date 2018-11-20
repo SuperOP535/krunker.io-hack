@@ -92,110 +92,112 @@ class Hack {
         const rh = document.getElementById('rightHolder');
         rh.insertAdjacentHTML("beforeend", "<br/><a href='javascript:;' onmouseover=\"SOUND.play('tick_0',0.1)\" onclick='showWindow(window.windows.length);' class=\"menuLink\">Hacks</a>")
         let self = this
-        this.settingsMenu = [{
-            name: "Show FPS",
-            pre: "<div class='setHed'><center>Hack Settings</center></div><div class='setHed'>Render</div>",
-            val: 1,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(0, this.checked)' ${self.settingsMenu[0].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.fpsCounter = t;
+        this.settingsMenu = {
+            fpsCounter: {
+                name: "Show FPS",
+                pre: "<div class='setHed'><center>Hack Settings</center></div><div class='setHed'>Render</div>",
+                val: 1,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("fpsCounter", this.checked)' ${self.settingsMenu["fpsCounter"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.fpsCounter = t;
+                }
+            }, esp: {
+                name: "Player ESP",
+                val: 1,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("esp", this.checked)' ${self.settingsMenu["esp"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.esp = t
+                }
+            }, tracers: {
+                name: "Player Tracers",
+                val: 1,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("tracers", this.checked)' ${self.settingsMenu["tracers"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.tracers = t;
+                }
+            }, bhop: {
+                name: "BHop",
+                pre: "<div class='setHed'>Movement</div>",
+                val: 0,
+                html() {
+                    return `<select onchange="window.hack.setSetting("bhop", this.value)"><option value="0"${self.settingsMenu["bhop"].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu["bhop"].val == 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu["bhop"].val == 2 ? " selected" : ""}>Manual</option></select>`
+                },
+                set(t) {
+                    self.settings.bhop = parseInt(t)
+                }
+            }, noRecoil: {
+                name: "No Recoil",
+                pre: "<div class='setHed'>Combat</div>",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("noRecoil", this.checked)' ${self.settingsMenu["noRecoil"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.noRecoil = t
+                }
+            }, autoAim: {
+                name: "Auto Aim",
+                val: 3,
+                html() {
+                    return `<select onchange="window.hack.setSetting("autoAim", this.value)"><option value="0"${self.settingsMenu["autoAim"].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu["autoAim"].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu["autoAim"].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu["autoAim"].val == 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu["autoAim"].val == 4 ? " selected" : ""}>Hip Fire</option></select>`
+                },
+                set(t) {
+                    self.settings.autoAim = parseInt(t)
+                }
+            }, autoAimWalls: {
+                name: "Aim Through Walls",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoAimWalls", this.checked);' ${self.settingsMenu["autoAim"].val ? (self.settingsMenu["autoAimWalls"].val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.autoAimWalls = t;
+                }
+            }, aimSettings: {
+                name: "Custom Aim Settings",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("aimSettings", this.checked)' ${self.settingsMenu["aimSettings"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.aimSettings = t;
+                    self.changeSettings();
+                }
+            }, autoRespawn: {
+                name: "Auto Respawn",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoRespawn", this.checked)' ${self.settingsMenu["autoRespawn"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.autoRespawn = t;
+                }
+            }, autoSwap: {
+                name: "Auto Weapon Swap",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoSwap", this.checked)' ${self.settingsMenu["autoSwap"].val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.autoSwap = t;
+                }
             }
-        }, {
-            name: "Player ESP",
-            val: 1,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(1, this.checked)' ${self.settingsMenu[1].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.esp = t
-            }
-        }, {
-            name: "Player Tracers",
-            val: 1,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(2, this.checked)' ${self.settingsMenu[2].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.tracers = t;
-            }
-        }, {
-            name: "BHop",
-            pre: "<div class='setHed'>Movement</div>",
-            val: 0,
-            html() {
-                return `<select onchange="window.hack.setSetting(3, this.value)"><option value="0"${self.settingsMenu[3].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[3].val == 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu[3].val == 2 ? " selected" : ""}>Manual</option></select>`
-            },
-            set(t) {
-                self.settings.bhop = parseInt(t)
-            }
-        }, {
-            name: "No Recoil",
-            pre: "<div class='setHed'>Combat</div>",
-            val: 0,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(4, this.checked)' ${self.settingsMenu[4].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.noRecoil = t
-            }
-        }, {
-            name: "Auto Aim",
-            val: 3,
-            html() {
-                return `<select onchange="window.hack.setSetting(5, this.value)"><option value="0"${self.settingsMenu[5].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu[5].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu[5].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu[5].val == 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu[5].val == 4 ? " selected" : ""}>Hip Fire</option></select>`
-            },
-            set(t) {
-                self.settings.autoAim = parseInt(t)
-            }
-        }, {
-            name: "Aim Through Walls",
-            val: 0,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(6, this.checked);' ${self.settingsMenu[5].val ? (self.settingsMenu[6].val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.autoAimWalls = t;
-            }
-        }, {
-            name: "Custom Aim Settings",
-            val: 0,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(7, this.checked)' ${self.settingsMenu[7].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.aimSettings = t;
-                self.changeSettings();
-            }
-        }, {
-            name: "Auto Respawn",
-            val: 0,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(8, this.checked)' ${self.settingsMenu[8].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.autoRespawn = t;
-            }
-        }, {
-            name: "Auto Weapon Swap",
-            val: 0,
-            html() {
-                return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting(9, this.checked)' ${self.settingsMenu[9].val ? "checked" : ""}><span class='slider'></span></label>`
-            },
-            set(t) {
-                self.settings.autoSwap = t;
-            }
-        }];
+        };
     }
 
     setupSettings() {
-        for (let i = 0; i < this.settingsMenu.length; ++i)
-            if (this.settingsMenu[i].set) {
-                const nt = this.getSavedVal(`kro_set_hack_${i}`);
-                this.settingsMenu[i].val = null !== nt ? nt : this.settingsMenu[i].val,
-                    "false" == this.settingsMenu[i].val && (this.settingsMenu[i].val = !1),
-                    this.settingsMenu[i].set(this.settingsMenu[i].val, !0)
+        for (var key in this.settingsMenu)
+            if (this.settingsMenu[key].set) {
+                const nt = this.getSavedVal(`kro_set_hack_${key}`);
+                this.settingsMenu[key].val = null !== nt ? nt : this.settingsMenu[key].val,
+                    "false" == this.settingsMenu[key].val && (this.settingsMenu[key].val = !1),
+                    this.settingsMenu[key].set(this.settingsMenu[key].val, !0)
             }
     }
 
@@ -205,7 +207,7 @@ class Hack {
             case 'B':
                 this.settings.bhop++;
                 if (this.settings.bhop > 2) this.settings.bhop = 0
-                this.setSetting(3, this.settings.bhop);
+                this.setSetting('bhop', this.settings.bhop);
                 var n = this.settings.bhop == 0 ? 'Disabled' : (this.settings.bhop == 2 ? 'Manual' : 'Automatic');
                 this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
@@ -213,7 +215,7 @@ class Hack {
             case 'T':
                 this.settings.autoAim++;
                 if (this.settings.autoAim > 4) this.settings.autoAim = 0
-                this.setSetting(5, this.settings.autoAim);
+                this.setSetting('autoAim', this.settings.autoAim);
                 var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 4 ? 'Hip Fire' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot')));
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
                 break;
@@ -580,7 +582,7 @@ GM_xmlhttpRequest({
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
-            .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings",html: "", gen: function () {for (var t = "", e = 0; e < window.hack.settingsMenu.length; ++e){window.hack.settingsMenu[e].pre && (t += window.hack.settingsMenu[e].pre) , t += "<div class=\'settName\'>" + window.hack.settingsMenu[e].name + " " + window.hack.settingsMenu[e].html() + "</div>";}return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
+            .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings", html: "",gen: function () {var t = ""; for (var key in window.hack.settingsMenu) {window.hack.settingsMenu[key].pre && (t += window.hack.settingsMenu[key].pre), t += "<div class=\'settName\'>" + window.hack.settingsMenu[key].name + " " + window.hack.settingsMenu[key].html() + "</div>";} return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
             .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){window.hack.keyDown($1),')
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
             .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" == nukeFlash.style.display');
