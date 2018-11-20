@@ -386,7 +386,9 @@ class Hack {
                             this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
                             this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
                             this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
-                            this.drawText(`Ammo: ${entity.ammos[0]}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+                            if (entity.weapon.ammo) {
+                                this.drawText(`Ammo: ${entity.ammos[entity.weaponIndex]} / ${entity.weapon.ammo}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
+                            }
                         }
                     }
 
