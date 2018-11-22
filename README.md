@@ -4,10 +4,10 @@
 - jabbidle
 
 ### Features:
-- Aimbot (Triggerbot, Quickscoper, Manual, Hip fire)
+- Aimbot (Triggerbot, Quickscoper, Manual, Hip fire) (Various Ranges)
 - FPS Counter
 - Player Tracers
-- Player ESP (aka. Wallhack) (Full, Outline Only) (Changeable Colors)
+- Player ESP (aka. Wallhack) (Full, Outline Only) (Various Colors)
 - BHop (Automatic, Manual)
 - NoRecoil
 - Auto Respawn
