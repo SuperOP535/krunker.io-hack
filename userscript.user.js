@@ -38,6 +38,7 @@ class Hack {
             fpsCounter: true,
             autoAim: 3,
             autoAimWalls: false,
+            autoAimRange: 'Default',
             aimSettings: true,
             noRecoil: true,
             tracers: true,
@@ -160,6 +161,28 @@ class Hack {
                 },
                 set(t) {
                     self.settings.autoAim = parseInt(t)
+                }
+            }, autoAimRange: {
+                name: "Auto Aim Range",
+                val: 'Default',
+                html() {
+                    return `<select onchange="window.hack.setSetting('autoAimRange', this.value)"> 
+                    <option${self.settingsMenu["autoAimRange"].val == 'Default' ? " selected" : ""}>Default</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '100' ? " selected" : ""}>100</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '150' ? " selected" : ""}>150</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '200' ? " selected" : ""}>200</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '250' ? " selected" : ""}>250</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '300' ? " selected" : ""}>300</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '350' ? " selected" : ""}>350</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '400' ? " selected" : ""}>400</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '450' ? " selected" : ""}>450</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '500' ? " selected" : ""}>500</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '750' ? " selected" : ""}>750</option>
+                    <option${self.settingsMenu["autoAimRange"].val == '1000' ? " selected" : ""}>1000</option>
+                    </select>`
+                },
+                set(t) {
+                    self.settings.autoAimRange = t
                 }
             }, autoAimWalls: {
                 name: "Aim Through Walls",
@@ -324,6 +347,7 @@ class Hack {
     }
 
     getRange() {
+        if (this.settings.autoAimRange != 'Default') return parseInt(this.settings.autoAimRange)
         if (this.me.weapon.range) return this.me.weapon.range + 25
         return 9999
     }
