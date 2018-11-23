@@ -29,7 +29,7 @@ class Hack {
             context: null,
             config: null
         }
-        this.colors = ['Green', 'Orange', 'DodgerBlue', 'Black', 'Red'];
+        this.colors = ['Green', 'Orange', 'DodgerBlue', 'Black', 'Red']
         this.settings = {
             esp: 1,
             espColor: 0,
@@ -101,122 +101,133 @@ class Hack {
                 pre: "<div class='setHed'><center>Hack Settings</center></div><div class='setHed'>Render</div>",
                 val: 1,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("fpsCounter", this.checked)' ${self.settingsMenu["fpsCounter"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("fpsCounter", this.checked)' ${self.settingsMenu.fpsCounter.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.fpsCounter = t;
                 }
-            }, esp: {
+            },
+            esp: {
                 name: "Player ESP",
                 val: 1,
                 html() {
-                    return `<select onchange="window.hack.setSetting('esp', this.value)"><option value="0"${self.settingsMenu["esp"].val == 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu["esp"].val == 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu["esp"].val == 2 ? " selected" : ""}>Outline Only</option></select>`
+                    return `<select onchange="window.hack.setSetting('esp', this.value)"><option value="0"${self.settingsMenu.esp.val === 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu.esp.val === 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu.esp.val === 2 ? " selected" : ""}>Outline Only</option></select>`
                 },
                 set(t) {
                     self.settings.esp = parseInt(t)
                 }
-            }, espColor: {
+            },
+            espColor: {
                 name: "Player ESP Color",
                 val: 0,
                 html() {
-                    return `<select onchange="window.hack.setSetting('espColor', this.value)"><option value="0"${self.settingsMenu["espColor"].val == 0 ? " selected" : ""}>Green</option><option value="1"${self.settingsMenu["espColor"].val == 1 ? " selected" : ""}>Orange</option><option value="2"${self.settingsMenu["espColor"].val == 2 ? " selected" : ""}>DodgerBlue</option><option value="3"${self.settingsMenu["espColor"].val == 3 ? " selected" : ""}>Black</option><option value="4"${self.settingsMenu["espColor"].val == 4 ? " selected" : ""}>Red</option></select>`
+                    return `<select onchange="window.hack.setSetting('espColor', this.value)"><option value="0"${self.settingsMenu.espColor.val === 0 ? " selected" : ""}>Green</option><option value="1"${self.settingsMenu.espColor.val === 1 ? " selected" : ""}>Orange</option><option value="2"${self.settingsMenu.espColor.val === 2 ? " selected" : ""}>DodgerBlue</option><option value="3"${self.settingsMenu.espColor.val === 3 ? " selected" : ""}>Black</option><option value="4"${self.settingsMenu.espColor.val === 4 ? " selected" : ""}>Red</option></select>`
                 },
                 set(t) {
                     self.settings.espColor = parseInt(t)
                 }
-            }, tracers: {
+            },
+            tracers: {
                 name: "Player Tracers",
                 val: 1,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("tracers", this.checked)' ${self.settingsMenu["tracers"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("tracers", this.checked)' ${self.settingsMenu.tracers.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.tracers = t;
                 }
-            }, bhop: {
+            },
+            bhop: {
                 name: "BHop",
                 pre: "<div class='setHed'>Movement</div>",
                 val: 0,
                 html() {
-                    return `<select onchange="window.hack.setSetting('bhop', this.value)"><option value="0"${self.settingsMenu["bhop"].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu["bhop"].val == 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu["bhop"].val == 2 ? " selected" : ""}>Manual</option></select>`
+                    return `<select onchange="window.hack.setSetting('bhop', this.value)"><option value="0"${self.settingsMenu.bhop.val === 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu.bhop.val === 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu.bhop.val === 2 ? " selected" : ""}>Manual</option></select>`
                 },
                 set(t) {
                     self.settings.bhop = parseInt(t)
                 }
-            }, noRecoil: {
+            },
+            noRecoil: {
                 name: "No Recoil",
                 pre: "<div class='setHed'>Combat</div>",
                 val: 0,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("noRecoil", this.checked)' ${self.settingsMenu["noRecoil"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("noRecoil", this.checked)' ${self.settingsMenu.noRecoil.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.noRecoil = t
                 }
-            }, autoAim: {
+            },
+            autoAim: {
                 name: "Auto Aim",
                 val: 3,
                 html() {
-                    return `<select onchange="window.hack.setSetting('autoAim', this.value)"><option value="0"${self.settingsMenu["autoAim"].val == 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu["autoAim"].val == 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu["autoAim"].val == 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu["autoAim"].val == 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu["autoAim"].val == 4 ? " selected" : ""}>Hip Fire</option></select>`
+                    return `<select onchange="window.hack.setSetting('autoAim', this.value)"><option value="0"${self.settingsMenu.autoAim.val === 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu.autoAim.val === 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu.autoAim.val === 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu.autoAim.val === 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu.autoAim.val === 4 ? " selected" : ""}>Hip Fire</option></select>`
                 },
                 set(t) {
                     self.settings.autoAim = parseInt(t)
                 }
-            }, autoAimRange: {
+            },
+            autoAimRange: {
                 name: "Auto Aim Range",
                 val: 'Default',
                 html() {
-                    return `<select onchange="window.hack.setSetting('autoAimRange', this.value)"> 
-                    <option${self.settingsMenu["autoAimRange"].val == 'Default' ? " selected" : ""}>Default</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '100' ? " selected" : ""}>100</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '150' ? " selected" : ""}>150</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '200' ? " selected" : ""}>200</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '250' ? " selected" : ""}>250</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '300' ? " selected" : ""}>300</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '350' ? " selected" : ""}>350</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '400' ? " selected" : ""}>400</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '450' ? " selected" : ""}>450</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '500' ? " selected" : ""}>500</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '750' ? " selected" : ""}>750</option>
-                    <option${self.settingsMenu["autoAimRange"].val == '1000' ? " selected" : ""}>1000</option>
+                    return `<select onchange="window.hack.setSetting('autoAimRange', this.value)">
+                    <option${self.settingsMenu.autoAimRange.val === 'Default' ? " selected" : ""}>Default</option>
+                    <option${self.settingsMenu.autoAimRange.val === '100' ? " selected" : ""}>100</option>
+                    <option${self.settingsMenu.autoAimRange.val === '150' ? " selected" : ""}>150</option>
+                    <option${self.settingsMenu.autoAimRange.val === '200' ? " selected" : ""}>200</option>
+                    <option${self.settingsMenu.autoAimRange.val === '250' ? " selected" : ""}>250</option>
+                    <option${self.settingsMenu.autoAimRange.val === '300' ? " selected" : ""}>300</option>
+                    <option${self.settingsMenu.autoAimRange.val === '350' ? " selected" : ""}>350</option>
+                    <option${self.settingsMenu.autoAimRange.val === '400' ? " selected" : ""}>400</option>
+                    <option${self.settingsMenu.autoAimRange.val === '450' ? " selected" : ""}>450</option>
+                    <option${self.settingsMenu.autoAimRange.val === '500' ? " selected" : ""}>500</option>
+                    <option${self.settingsMenu.autoAimRange.val === '750' ? " selected" : ""}>750</option>
+                    <option${self.settingsMenu.autoAimRange.val === '1000' ? " selected" : ""}>1000</option>
                     </select>`
                 },
                 set(t) {
                     self.settings.autoAimRange = t
                 }
-            }, autoAimWalls: {
+            },
+            autoAimWalls: {
                 name: "Aim Through Walls",
                 val: 0,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoAimWalls", this.checked);' ${self.settingsMenu["autoAim"].val ? (self.settingsMenu["autoAimWalls"].val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoAimWalls", this.checked);' ${self.settingsMenu.autoAim.val ? (self.settingsMenu.autoAimWalls.val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.autoAimWalls = t;
                 }
-            }, aimSettings: {
+            },
+            aimSettings: {
                 name: "Custom Aim Settings",
                 val: 0,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("aimSettings", this.checked)' ${self.settingsMenu["aimSettings"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("aimSettings", this.checked)' ${self.settingsMenu.aimSettings.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.aimSettings = t;
                     self.changeSettings();
                 }
-            }, autoRespawn: {
+            },
+            autoRespawn: {
                 name: "Auto Respawn",
                 val: 0,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoRespawn", this.checked)' ${self.settingsMenu["autoRespawn"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoRespawn", this.checked)' ${self.settingsMenu.autoRespawn.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.autoRespawn = t;
                 }
-            }, autoSwap: {
+            },
+            autoSwap: {
                 name: "Auto Weapon Swap",
                 val: 0,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoSwap", this.checked)' ${self.settingsMenu["autoSwap"].val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoSwap", this.checked)' ${self.settingsMenu.autoSwap.val ? "checked" : ""}><span class='slider'></span></label>`
                 },
                 set(t) {
                     self.settings.autoSwap = t;
@@ -226,48 +237,49 @@ class Hack {
     }
 
     setupSettings() {
-        for (var key in this.settingsMenu)
+        for (const key in this.settingsMenu)
             if (this.settingsMenu[key].set) {
                 const nt = this.getSavedVal(`kro_set_hack_${key}`);
                 this.settingsMenu[key].val = null !== nt ? nt : this.settingsMenu[key].val,
-                    "false" == this.settingsMenu[key].val && (this.settingsMenu[key].val = !1),
+                    "false" === this.settingsMenu[key].val && (this.settingsMenu[key].val = !1),
                     this.settingsMenu[key].set(this.settingsMenu[key].val, !0)
             }
     }
 
     keyDown(event) {
-        if (document.activeElement.id == 'chatInput') return;
+        if (document.activeElement.id === 'chatInput') return
+        let opt = null
         switch (event.key.toUpperCase()) {
             case 'B':
                 this.settings.bhop++;
                 if (this.settings.bhop > 2) this.settings.bhop = 0
-                this.setSetting('bhop', this.settings.bhop);
-                var n = this.settings.bhop == 0 ? 'Disabled' : (this.settings.bhop == 2 ? 'Manual' : 'Automatic');
-                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                this.setSetting('bhop', this.settings.bhop)
+                opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic');
+                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
             case 'T':
                 this.settings.autoAim++;
                 if (this.settings.autoAim > 4) this.settings.autoAim = 0
-                this.setSetting('autoAim', this.settings.autoAim);
-                var n = this.settings.autoAim == 0 ? 'Disabled' : (this.settings.autoAim == 4 ? 'Hip Fire' : (this.settings.autoAim == 3 ? 'Manual' : (this.settings.autoAim == 2 ? 'Quickscoper' : 'TriggerBot')));
-                this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                this.setSetting('autoAim', this.settings.autoAim)
+                opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')));
+                this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
-           case 'Y':
+            case 'Y':
                 this.settings.esp++;
                 if (this.settings.esp > 2) this.settings.esp = 0
-                this.setSetting('esp', this.settings.esp);
-                var n = this.settings.esp == 0 ? 'Disabled' : (this.settings.esp == 2 ? 'Outline Only' : 'Full');
-                this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${n}</span>`, !0)
+                this.setSetting('esp', this.settings.esp)
+                opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full');
+                this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
-           case 'U':
+            case 'U':
                 this.settings.espColor++;
                 if (this.settings.espColor > 4) this.settings.espColor = 0
                 this.setSetting('espColor', this.settings.espColor);
-                var n = this.colors[this.settings.espColor];
-                this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${n.toLowerCase()}'>${n}</span>`, !0)
+                opt = this.colors[this.settings.espColor]
+                this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, !0)
                 break;
 
             case ' ':
@@ -278,30 +290,13 @@ class Hack {
     }
 
     keyUp(event) {
-        if (document.activeElement.id == 'chatInput') return;
-        switch (event.key.toUpperCase()) {
-            case ' ':
-                if (this.settings.bhop !== 2) return;
-                this.settings.bhopHeld = false;
-                break;
-        }
+        if (document.activeElement.id === 'chatInput') return
+        if (event.keyCode === 32) this.settings.bhop !== 2 ? void 0 : this.settings.bhopHeld = false
     }
 
     chatMessage(t, e, n) {
         const chatList = document.getElementById('chatList');
-        for (chatList.innerHTML += n ? `<div class='chatItem'><span class='chatMsg'>${e}</span></div><br/>` : `<div class='chatItem'>${t || "unknown"}: <span class='chatMsg'>${e}</span></div><br/>`; chatList.scrollHeight >= 250;)
-            chatList.removeChild(chatList.childNodes[0])
-    }
-
-    drawText(txt, font, color, x, y) {
-        this.ctx.save()
-        this.ctx.translate(x, y)
-        this.ctx.beginPath()
-        this.ctx.fillStyle = color
-        this.ctx.font = font
-        this.ctx.fillText(txt, 0, 0)
-        this.ctx.closePath()
-        this.ctx.restore()
+        for (chatList.innerHTML += n ? `<div class='chatItem'><span class='chatMsg'>${e}</span></div><br/>` : `<div class='chatItem'>${t || "unknown"}: <span class='chatMsg'>${e}</span></div><br/>`; chatList.scrollHeight >= 250;) chatList.removeChild(chatList.childNodes[0])
     }
 
     getMyself() {
@@ -352,6 +347,48 @@ class Hack {
         return 9999
     }
 
+    text(txt, font, color, x, y) {
+        this.ctx.save()
+        this.ctx.translate(x, y)
+        this.ctx.beginPath()
+        this.ctx.fillStyle = color
+        this.ctx.font = font
+        this.ctx.fillText(txt, 0, 0)
+        this.ctx.closePath()
+        this.ctx.restore()
+    }
+
+    rect(x, y, ox, oy, w, h, color, fill) {
+        this.ctx.save()
+        this.ctx.translate(x, y)
+        this.ctx.beginPath()
+        fill ? this.ctx.fillStyle = color : this.ctx.strokeStyle = color
+        this.ctx.rect(ox, oy, w, h)
+        fill ? this.ctx.fill() : this.ctx.stroke()
+        this.ctx.closePath()
+        this.ctx.restore()
+    }
+
+    line(x1, y1, x2, y2, lW, sS) {
+        this.ctx.save()
+        this.ctx.lineWidth = lW
+        this.ctx.beginPath()
+        this.ctx.strokeStyle = sS
+        this.ctx.moveTo(x1, y1)
+        this.ctx.lineTo(x2, y2)
+        this.ctx.stroke()
+        this.ctx.restore()
+    }
+
+    image(x, y, img, ox, oy, w, h) {
+        this.ctx.save()
+        this.ctx.translate(x, y)
+        this.ctx.beginPath()
+        this.ctx.drawImage(img, ox, oy, w, h)
+        this.ctx.closePath()
+        this.ctx.restore()
+    }
+
     drawESP() {
         for (const entity of this.hooks.entities.filter(x => !x.isYou)) {
             if (entity.active) {
@@ -365,79 +402,29 @@ class Hack {
                     const offsetX = 80
                     const offsetY = 180
                     const color = this.colors[this.settings.espColor]
-                    
                     if (this.settings.esp > 0) {
-                        this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
-                        this.ctx.save()
-                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-                        this.ctx.beginPath()
-                        this.ctx.fillStyle = "red"
-                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
-                        this.ctx.stroke()
-                        this.ctx.closePath()
-                        this.ctx.restore()
-
-                        this.ctx.save()
-                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-                        this.ctx.beginPath()
-                        this.ctx.fillStyle = "green"
-                        this.ctx.rect(0, 0, 20 * scale, offsetY * scale)
-                        this.ctx.fill()
-                        this.ctx.closePath()
-                        this.ctx.restore()
-
-                        this.ctx.save()
-                        this.ctx.translate(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2))
-                        this.ctx.beginPath()
-                        this.ctx.fillStyle = "red"
-                        this.ctx.rect(0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale)
-                        this.ctx.fill()
-                        this.ctx.closePath()
-                        this.ctx.restore()
-
-                        this.ctx.save()
-                        this.ctx.translate(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2))
-                        this.ctx.beginPath()
-                        this.ctx.fillStyle = "red"
-                        this.ctx.rect(0, 0, offsetX * scale, offsetY * scale)
-                        this.ctx.stroke()
-                        this.ctx.closePath()
-                        this.ctx.restore()
-                        
-                        if (this.settings.esp == 1) {
+                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, offsetY * scale, "black", false)
+                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, offsetY * scale, "green", true)
+                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale, "red", true)
+                        this.rect(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2), 0, 0, offsetX * scale, offsetY * scale, "black", false)
+                        if (this.settings.esp === 1) {
                             const fontSize = 26 * scale > 13 ? 13 : 26 * scale
-                            this.drawText(`Name: ${entity.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2))
-                            this.drawText(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 10)
-                            this.drawText(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 20)
-                            this.drawText(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 30)
-                            if (entity.weapon.ammo) {
-                                this.drawText(`Ammo: ${entity.ammos[entity.weaponIndex]} / ${entity.weapon.ammo}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + 40)
-                            }
+                            let spacing = scale < 0.5 ? 2 : 0
+                            this.text(`Name: ${entity.name} ${entity.clan ? `[${entity.clan}]` : ``} Lvl: ${entity.level}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 4 : 10 * scale))
+                            this.text(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 25 * scale))
+                            this.text(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 40 * scale))
+                            this.text(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 55 * scale))
+                            if (entity.weapon.ammo) this.text(`Ammo: ${entity.ammos[entity.weaponIndex]} / ${entity.weapon.ammo}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 70 * scale))
                         }
                     }
-
-                    if (this.settings.tracers) {
-                        this.ctx.save()
-                        this.ctx.lineWidth = 2
-                        this.ctx.beginPath()
-                        this.ctx.strokeStyle = entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red"
-                        this.ctx.moveTo(innerWidth / 2, innerHeight - 1)
-                        this.ctx.lineTo(targetX, targetY)
-                        this.ctx.stroke()
-                        this.ctx.restore()
-                    }
+                    if (this.settings.tracers) this.line(innerWidth / 2, innerHeight - 1, targetX, targetY, 2, entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red")
                 }
             }
         }
     }
 
     drawFPS() {
-        if (!this.settings.fpsCounter) {
-            if (this.fpsCounter.innerHTML.length > 0) {
-                this.fpsCounter.innerHTML = '';
-            }
-            return;
-        }
+        if (!this.settings.fpsCounter && this.fpsCounter.innerHTML.length > 0) return void(this.fpsCounter.innerHTML = '')
         const now = performance.now()
         for (; this.fpsTimes.length > 0 && this.fpsTimes[0] <= now - 1e3;) this.fpsTimes.shift()
         this.fpsTimes.push(now)
@@ -445,16 +432,9 @@ class Hack {
         this.fpsCounter.innerHTML = `FPS: ${this.fps}`
         this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
     }
-    
+
     drawFlag() {
-        if (window.objectiveIcon && window.objectiveIcon.style.display === "inline-block") {
-            this.ctx.save()
-            this.ctx.translate(parseFloat(window.objectiveIcon.style.left) / 100 * innerWidth, parseFloat(window.objectiveIcon.style.top) / 100 * innerHeight)
-            this.ctx.beginPath()
-            this.ctx.drawImage(this.flag, 0, 0, parseFloat(window.objectiveIcon.style.width), parseFloat(window.objectiveIcon.style.height))
-            this.ctx.closePath()
-            this.ctx.restore()
-        }
+        if (window.objectiveIcon && window.objectiveIcon.style.display === "inline-block") this.image(parseFloat(window.objectiveIcon.style.left) / 100 * innerWidth, parseFloat(window.objectiveIcon.style.top) / 100 * innerHeight, this.flag, 0, 0, parseFloat(window.objectiveIcon.style.width), parseFloat(window.objectiveIcon.style.height))
     }
 
     bhop() {
@@ -471,13 +451,12 @@ class Hack {
 
     autoRespawn() {
         if (!this.settings.autoRespawn) return
-        if (this.me && this.me.y == undefined && !document.pointerLockElement) this.camera.toggle(true)
+        if (this.me && this.me.y === undefined && !document.pointerLockElement) this.camera.toggle(true)
     }
 
     autoSwap() {
         if (!this.settings.autoSwap || !this.me.weapon.ammo || this.me.ammos.length < 2) return
-        if (this.me.ammos[this.me.weaponIndex] == 0 && this.me.ammos[0] != this.me.ammos[1])
-        {
+        if (this.me.ammos[this.me.weaponIndex] === 0 && this.me.ammos[0] != this.me.ammos[1]) {
             this.inputs[10] = 1;
         }
     }
@@ -641,7 +620,7 @@ GM_xmlhttpRequest({
             .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings", html: "",gen: function () {var t = ""; for (var key in window.hack.settingsMenu) {window.hack.settingsMenu[key].pre && (t += window.hack.settingsMenu[key].pre), t += "<div class=\'settName\'>" + window.hack.settingsMenu[key].name + " " + window.hack.settingsMenu[key].html() + "</div>";} return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
             .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){window.hack.keyDown($1),')
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
-            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" == nukeFlash.style.display');
+            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display');
 
 
         GM_xmlhttpRequest({
