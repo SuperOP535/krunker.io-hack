@@ -4,7 +4,7 @@
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @version      3.1
-// @author       Faber, collaborators: William Thomson, Tehchy
+// @author       Faber, Tehchy
 // @include      /^https?:\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
