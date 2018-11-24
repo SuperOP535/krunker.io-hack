@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.2
+// @version      3.3
 // @author       Faber, Tehchy
 // @include      /^https?:\/\/krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -325,7 +325,7 @@ class Hack {
         let target = null
         let bestDist = this.getRange()
         for (const player of this.hooks.entities.filter(x => !x.isYou)) {
-            if ((player.notObst || this.settings.autoAimWalls) && player.active) {
+            if ((player.isVisible || this.settings.autoAimWalls) && player.active) {
                 if (this.me.team && this.me.team === player.team) continue
                 let dist = this.getDistance3D(this.me.x, this.me.y, this.me.z, player.x, player.y, player.z)
                 if (dist < bestDist) {
@@ -607,7 +607,7 @@ GM_xmlhttpRequest({
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
-            .replace(/if\(\w+\.notObst\){/, "if(true){")
+            .replace(/if\(\w+\.isVisible\){/, "if(true){")
             .replace(/}else \w+\.style\.display="none"/, "}")
             .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
@@ -615,12 +615,13 @@ GM_xmlhttpRequest({
             .replace(/(\w+\.style\.left=)100\*(\w+\.\w+)\+"%",/, '$1$2*innerWidth+"px",window.hack.hooks.entities[i].hookedX=$2*innerWidth,')
             .replace(/(\w+\.style\.top=)100\*\(1-(\w+\.\w+)\)\+"%",/, '$1(1-$2)*innerHeight+"px",window.hack.hooks.entities[i].hookedY=(1-$2)*innerHeight,')
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
-            .replace(/(\w+).processInput\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.processInput($2,$3),$4.moveCam')
+            .replace(/(\w+).procInputs\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.procInputs($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
             .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings", html: "",gen: function () {var t = ""; for (var key in window.hack.settingsMenu) {window.hack.settingsMenu[key].pre && (t += window.hack.settingsMenu[key].pre), t += "<div class=\'settName\'>" + window.hack.settingsMenu[key].name + " " + window.hack.settingsMenu[key].html() + "</div>";} return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
             .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){window.hack.keyDown($1),')
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
-            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display');
+            .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display')
+            .replace(/(\w+)\("Kicked for inactivity"\)\),(.*),requestAnimFrame\((\w+)\)/, '$1("Kicked for inactivity")),requestAnimFrame($3)');
 
 
         GM_xmlhttpRequest({
