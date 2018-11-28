@@ -333,6 +333,10 @@ class Hack {
                 opt = scopes[this.settings.weaponScope]
                 this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
+            case 'P':
+                this.settings.speedHack = !this.settings.speedHack;
+                this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack === true ? 'green' : 'red'}'>${this.settings.speedHack === true ? "Enabled" : "Disabled"}</span>`, !0)
+                break;
 
             case ' ':
                 if (this.settings.bhop !== 2) return
