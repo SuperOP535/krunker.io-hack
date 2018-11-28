@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.4
+// @version      3.5
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -46,6 +46,7 @@ class Hack {
             autoSwap: false,
             autoReload: false,
             speedHack: false,
+            weaponScope: 0,
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -254,6 +255,16 @@ class Hack {
                 set(t) {
                     self.settings.autoReload = t;
                 }
+            },
+            weaponScope: {
+                name: "Weapon Scope",
+                val: 0,
+                html() {
+                    return `<select onchange="window.hack.setSetting('weaponScope', this.value)"><option value="0"${self.settingsMenu.weaponScope.val === 0 ? " selected" : ""}>Default</option><option value="1"${self.settingsMenu.weaponScope.val === 1 ? " selected" : ""}>Iron Sight</option><option value="2"${self.settingsMenu.weaponScope.val === 2 ? " selected" : ""}>Sniper Scope</option></select>`
+                },
+                set(t) {
+                    self.settings.weaponScope = parseInt(t);
+                }
             }
         };
     }
@@ -273,40 +284,49 @@ class Hack {
         let opt = null
         switch (event.key.toUpperCase()) {
             case 'B':
-                this.settings.bhop++;
+                this.settings.bhop++
                 if (this.settings.bhop > 2) this.settings.bhop = 0
                 this.setSetting('bhop', this.settings.bhop)
-                opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic');
+                opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic')
                 this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
             case 'T':
-                this.settings.autoAim++;
+                this.settings.autoAim++
                 if (this.settings.autoAim > 4) this.settings.autoAim = 0
                 this.setSetting('autoAim', this.settings.autoAim)
-                opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')));
+                opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')))
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
             case 'Y':
-                this.settings.esp++;
+                this.settings.esp++
                 if (this.settings.esp > 2) this.settings.esp = 0
                 this.setSetting('esp', this.settings.esp)
-                opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full');
+                opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full')
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
             case 'U':
                 this.settings.espColor++;
                 if (this.settings.espColor > 4) this.settings.espColor = 0
-                this.setSetting('espColor', this.settings.espColor);
+                this.setSetting('espColor', this.settings.espColor)
                 opt = this.colors[this.settings.espColor]
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, !0)
                 break;
+                
+            case 'I':
+                this.settings.weaponScope++;
+                if (this.settings.weaponScope > 2) this.settings.weaponScope = 0
+                this.setSetting('weaponScope', this.settings.weaponScope)
+                let scopes = ['Default', 'Iron Sight', 'Sniper Scope']
+                opt = scopes[this.settings.weaponScope]
+                this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
+                break;
 
             case ' ':
-                if (this.settings.bhop !== 2) return;
-                this.settings.bhopHeld = true;
+                if (this.settings.bhop !== 2) return
+                this.settings.bhopHeld = true
                 break;
         }
     }
@@ -492,6 +512,11 @@ class Hack {
         if (!this.settings.speedHack) return
         this.inputs[1] *= 1.375
     }
+    
+    weaponScope() {
+        if (this.settings.weaponScope === 0) if (this.me.weapon.name === "Sniper Rifle") this.me.weapon.scope = 1; else delete this.me.weapon.scope
+        if (this.settings.weaponScope === 1) delete this.me.weapon.scope; else if (this.settings.weaponScope === 2) this.me.weapon.scope = 1
+    }
 
     initAimbot() {
         let self = this
@@ -608,6 +633,7 @@ class Hack {
         this.autoSwap()
         this.autoReload()
         this.speedHack()
+        this.weaponScope()
     }
 
     setSetting(t, e) {
