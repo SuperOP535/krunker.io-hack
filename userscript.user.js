@@ -115,7 +115,7 @@ class Hack {
                 name: "Player ESP",
                 val: 1,
                 html() {
-                    return `<select onchange="window.hack.setSetting('esp', this.value)"><option value="0"${self.settingsMenu.esp.val === 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu.esp.val === 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu.esp.val === 2 ? " selected" : ""}>Outline Only</option></select>`
+                    return `<select onchange="window.hack.setSetting('esp', this.value)"><option value="0"${self.settingsMenu.esp.val == 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu.esp.val == 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu.esp.val == 2 ? " selected" : ""}>Outline Only</option></select>`
                 },
                 set(t) {
                     self.settings.esp = parseInt(t)
@@ -125,7 +125,13 @@ class Hack {
                 name: "Player ESP Color",
                 val: 0,
                 html() {
-                    return `<select onchange="window.hack.setSetting('espColor', this.value)"><option value="0"${self.settingsMenu.espColor.val === 0 ? " selected" : ""}>Green</option><option value="1"${self.settingsMenu.espColor.val === 1 ? " selected" : ""}>Orange</option><option value="2"${self.settingsMenu.espColor.val === 2 ? " selected" : ""}>DodgerBlue</option><option value="3"${self.settingsMenu.espColor.val === 3 ? " selected" : ""}>Black</option><option value="4"${self.settingsMenu.espColor.val === 4 ? " selected" : ""}>Red</option></select>`
+                    return `<select onchange="window.hack.setSetting('espColor', this.value)">
+                    <option value="0"${self.settingsMenu.espColor.val == 0 ? " selected" : ""}>Green</option>
+                    <option value="1"${self.settingsMenu.espColor.val == 1 ? " selected" : ""}>Orange</option>
+                    <option value="2"${self.settingsMenu.espColor.val == 2 ? " selected" : ""}>DodgerBlue</option>
+                    <option value="3"${self.settingsMenu.espColor.val == 3 ? " selected" : ""}>Black</option>
+                    <option value="4"${self.settingsMenu.espColor.val == 4 ? " selected" : ""}>Red</option>
+                    </select>`
                 },
                 set(t) {
                     self.settings.espColor = parseInt(t)
@@ -146,7 +152,7 @@ class Hack {
                 pre: "<div class='setHed'>Movement</div>",
                 val: 0,
                 html() {
-                    return `<select onchange="window.hack.setSetting('bhop', this.value)"><option value="0"${self.settingsMenu.bhop.val === 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu.bhop.val === 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu.bhop.val === 2 ? " selected" : ""}>Manual</option></select>`
+                    return `<select onchange="window.hack.setSetting('bhop', this.value)"><option value="0"${self.settingsMenu.bhop.val == 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu.bhop.val == 1 ? " selected" : ""}>Automatic</option><option value="2"${self.settingsMenu.bhop.val == 2 ? " selected" : ""}>Manual</option></select>`
                 },
                 set(t) {
                     self.settings.bhop = parseInt(t)
@@ -177,7 +183,13 @@ class Hack {
                 name: "Auto Aim",
                 val: 3,
                 html() {
-                    return `<select onchange="window.hack.setSetting('autoAim', this.value)"><option value="0"${self.settingsMenu.autoAim.val === 0 ? " selected" : ""}>Off</option><option value="1"${self.settingsMenu.autoAim.val === 1 ? " selected" : ""}>TriggerBot</option><option value="2"${self.settingsMenu.autoAim.val === 2 ? " selected" : ""}>Quickscoper</option><option value="3"${self.settingsMenu.autoAim.val === 3 ? " selected" : ""}>Manual</option><option value="4"${self.settingsMenu.autoAim.val === 4 ? " selected" : ""}>Hip Fire</option></select>`
+                    return `<select onchange="window.hack.setSetting('autoAim', this.value)">
+                    <option value="0"${self.settingsMenu.autoAim.val == 0 ? " selected" : ""}>Disabled</option>
+                    <option value="1"${self.settingsMenu.autoAim.val == 1 ? " selected" : ""}>TriggerBot</option>
+                    <option value="2"${self.settingsMenu.autoAim.val == 2 ? " selected" : ""}>Quickscoper</option>
+                    <option value="3"${self.settingsMenu.autoAim.val == 3 ? " selected" : ""}>Manual</option>
+                    <option value="4"${self.settingsMenu.autoAim.val == 4 ? " selected" : ""}>Hip Fire</option>
+                   </select>`
                 },
                 set(t) {
                     self.settings.autoAim = parseInt(t)
@@ -271,7 +283,11 @@ class Hack {
                 name: "Weapon Scope",
                 val: 0,
                 html() {
-                    return `<select onchange="window.hack.setSetting('weaponScope', this.value)"><option value="0"${self.settingsMenu.weaponScope.val === 0 ? " selected" : ""}>Default</option><option value="1"${self.settingsMenu.weaponScope.val === 1 ? " selected" : ""}>Iron Sight</option><option value="2"${self.settingsMenu.weaponScope.val === 2 ? " selected" : ""}>Sniper Scope</option></select>`
+                    return `<select onchange="window.hack.setSetting('weaponScope', this.value)">
+                    <option value="0"${self.settingsMenu.weaponScope.val == 0 ? " selected" : ""}>Default</option>
+                    <option value="1"${self.settingsMenu.weaponScope.val == 1 ? " selected" : ""}>Iron Sight</option>
+                    <option value="2"${self.settingsMenu.weaponScope.val == 2 ? " selected" : ""}>Sniper Scope</option>
+                    </select>`
                 },
                 set(t) {
                     self.settings.weaponScope = parseInt(t);
