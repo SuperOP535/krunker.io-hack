@@ -44,6 +44,8 @@ class Hack {
             tracers: true,
             autoRespawn: false,
             autoSwap: false,
+            autoReload: false,
+            speedHack: false,
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -148,6 +150,16 @@ class Hack {
                     self.settings.bhop = parseInt(t)
                 }
             },
+            speedHack: {
+                name: "Speed hack",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("speedHack", this.checked)' ${self.settingsMenu.speedHack.val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.speedHack = t
+                }
+            },
             noRecoil: {
                 name: "No Recoil",
                 pre: "<div class='setHed'>Combat</div>",
@@ -231,6 +243,16 @@ class Hack {
                 },
                 set(t) {
                     self.settings.autoSwap = t;
+                }
+            },
+            autoReload: {
+                name: "Auto Reload",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoReload", this.checked)' ${self.settingsMenu.autoReload.val ? "checked" : ""}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.autoReload = t;
                 }
             }
         };
@@ -457,8 +479,18 @@ class Hack {
     autoSwap() {
         if (!this.settings.autoSwap || !this.me.weapon.ammo || this.me.ammos.length < 2) return
         if (this.me.ammos[this.me.weaponIndex] === 0 && this.me.ammos[0] != this.me.ammos[1]) {
-            this.inputs[10] = 1;
+            this.inputs[10] = -1
         }
+    }
+    
+    autoReload() {
+        if (!this.settings.autoReload || !this.me.weapon.ammo) return
+        if (this.me.ammos[this.me.weaponIndex] === 0 && this.inputs[9] === 0) this.inputs[9] = 1
+    }
+    
+    speedHack() {
+        if (!this.settings.speedHack) return
+        this.inputs[1] *= 1.375
     }
 
     initAimbot() {
@@ -574,6 +606,8 @@ class Hack {
         this.updateAimbot()
         this.noRecoil()
         this.autoSwap()
+        this.autoReload()
+        this.speedHack()
     }
 
     setSetting(t, e) {
