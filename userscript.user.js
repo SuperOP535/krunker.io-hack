@@ -37,6 +37,7 @@ class Hack {
             bhopHeld: false,
             fpsCounter: true,
             autoAim: 3,
+            autoAimOnScreen: false,
             autoAimWalls: false,
             autoAimRange: 'Default',
             aimSettings: true,
@@ -215,6 +216,16 @@ class Hack {
                     self.settings.autoAimWalls = t;
                 }
             },
+            autoAimOnScreen: {
+                name: "Aim If Player Is Inside Screen",
+                val: 0,
+                html() {
+                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("autoAimOnScreen", this.checked);' ${self.settingsMenu.autoAim.val ? (self.settingsMenu.autoAimOnScreen.val ? "checked" : "") : "disabled"}><span class='slider'></span></label>`
+                },
+                set(t) {
+                    self.settings.autoAimOnScreen = t;
+                }
+            },
             aimSettings: {
                 name: "Custom Aim Settings",
                 val: 0,
@@ -313,8 +324,7 @@ class Hack {
                 this.setSetting('espColor', this.settings.espColor)
                 opt = this.colors[this.settings.espColor]
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, !0)
-                break;
-                
+                break
             case 'I':
                 this.settings.weaponScope++;
                 if (this.settings.weaponScope > 2) this.settings.weaponScope = 0
@@ -367,7 +377,7 @@ class Hack {
         let target = null
         let bestDist = this.getRange()
         for (const player of this.hooks.entities.filter(x => !x.isYou)) {
-            if ((player.isVisible || this.settings.autoAimWalls) && player.active) {
+            if ((player.isVisible || this.settings.autoAimWalls) && player.active && (this.settings.autoAimOnScreen ? this.hooks.world.frustum.containsPoint(player) : true)) {
                 if (this.me.team && this.me.team === player.team) continue
                 let dist = this.getDistance3D(this.me.x, this.me.y, this.me.z, player.x, player.y, player.z)
                 if (dist < bestDist) {
@@ -558,9 +568,7 @@ class Hack {
     }
 
     updateAimbot() {
-        if (!this.settings.autoAim > 0) {
-            return
-        }
+        if (!this.settings.autoAim > 0) return
         if (!this.initialized) this.initAimbot()
         const target = this.getTarget()
         if (target) {
