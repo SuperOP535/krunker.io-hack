@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.5
+// @version      3.6
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -514,7 +514,7 @@ class Hack {
     }
     
     weaponScope() {
-        if (this.settings.weaponScope === 0) if (this.me.weapon.name === "Sniper Rifle") this.me.weapon.scope = 1; else delete this.me.weapon.scope
+        if (this.settings.weaponScope === 0) if (this.me.weapon.name === "Sniper Rifle" || this.me.weapon.name === "Semi Auto") this.me.weapon.scope = 1; else delete this.me.weapon.scope
         if (this.settings.weaponScope === 1) delete this.me.weapon.scope; else if (this.settings.weaponScope === 2) this.me.weapon.scope = 1
     }
 
