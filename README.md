@@ -9,9 +9,11 @@
 - Player Tracers
 - Player ESP (aka. Wallhack) (Full, Outline Only) (Various Colors)
 - BHop (Automatic, Manual)
+- Speed Hack
 - NoRecoil
 - Auto Respawn
 - Auto Weapon Swap
+- Auto Reload
 
 ## KeyBinds:
 - T: Cycle Through Aimbot Modes

@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.3
+// @version      3.4
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
