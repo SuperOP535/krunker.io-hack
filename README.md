@@ -22,6 +22,8 @@
 - B: Cycle Through BHop Modes
 - Y: Cycle Through Player ESP Modes
 - U: Cycle Through Player ESP Colors
+- I: Change Scope
+- P: Enable/Disable Speedhack
 
 ### Requirements:
 - Tampermonkey
