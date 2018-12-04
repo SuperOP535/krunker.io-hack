@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.8
+// @version      3.9
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -18,9 +18,11 @@ class Hack {
         this.camera = null
         this.inputs = null
         this.game = null
-        this.fps = 0
-        this.fpsTimes = []
-        this.fpsCounter = null
+        this.fps = {
+            cur: 0, 
+            times: [],
+            elm: null
+        }
         this.canvas = null
         this.ctx = null
         this.hooks = {
@@ -89,8 +91,8 @@ class Hack {
         el.style.top = "0.4em"
         el.style.left = "20px"
         el.style.fontSize = "smaller"
-        el.innerHTML = `FPS: ${this.fps}`
-        this.fpsCounter = el
+        el.innerHTML = `FPS: ${this.fps.cur}`
+        this.fps.elm = el
         const ui = document.getElementById("gameUI")
         ui.appendChild(el, ui)
     }
@@ -341,6 +343,7 @@ class Hack {
                 opt = this.colors[this.settings.espColor]
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, !0)
                 break
+
             case 'I':
                 this.settings.weaponScope++;
                 if (this.settings.weaponScope > 2) this.settings.weaponScope = 0
@@ -349,6 +352,7 @@ class Hack {
                 opt = scopes[this.settings.weaponScope]
                 this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
+
             case 'P':
                 this.settings.speedHack = !this.settings.speedHack;
                 this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack === true ? 'green' : 'red'}'>${this.settings.speedHack === true ? "Enabled" : "Disabled"}</span>`, !0)
@@ -364,6 +368,11 @@ class Hack {
     keyUp(event) {
         if (document.activeElement.id === 'chatInput') return
         if (event.keyCode === 32) this.settings.bhop !== 2 ? void 0 : this.settings.bhopHeld = false
+    }
+    
+    keyPress(event) {
+        return // will be used later
+        if (document.activeElement.id === 'chatInput') return
     }
 
     chatMessage(t, e, n) {
@@ -407,10 +416,6 @@ class Hack {
             }
         }
         return target
-    }
-
-    getDistFromPlayer(player) {
-        return Math.floor(this.me ? this.getDistance3D(this.me.x, this.me.y, this.me.z, player.x, player.y, player.z) : 0)
     }
 
     getRange() {
@@ -496,13 +501,13 @@ class Hack {
     }
 
     drawFPS() {
-        if (!this.settings.fpsCounter && this.fpsCounter.innerHTML.length > 0) return void(this.fpsCounter.innerHTML = '')
+        if (!this.settings.fpsCounter && this.fps.elm.innerHTML.length > 0) return void(this.fps.elm.innerHTML = '')
         const now = performance.now()
-        for (; this.fpsTimes.length > 0 && this.fpsTimes[0] <= now - 1e3;) this.fpsTimes.shift()
-        this.fpsTimes.push(now)
-        this.fps = this.fpsTimes.length
-        this.fpsCounter.innerHTML = `FPS: ${this.fps}`
-        this.fpsCounter.style.color = this.fps > 50 ? 'green' : (this.fps < 30 ? 'red' : 'orange')
+        for (; this.fps.times.length > 0 && this.fps.times[0] <= now - 1e3;) this.fps.times.shift()
+        this.fps.times.push(now)
+        this.fps.cur = this.fps.times.length
+        this.fps.elm.innerHTML = `FPS: ${this.fps.cur}`
+        this.fps.elm.style.color = this.fps.cur > 50 ? 'green' : (this.fps.cur < 30 ? 'red' : 'orange')
     }
 
     drawFlag() {
@@ -528,9 +533,7 @@ class Hack {
 
     autoSwap() {
         if (!this.settings.autoSwap || !this.me.weapon.ammo || this.me.ammos.length < 2) return
-        if (this.me.ammos[this.me.weaponIndex] === 0 && this.me.ammos[0] != this.me.ammos[1]) {
-            this.inputs[10] = -1
-        }
+        if (this.me.ammos[this.me.weaponIndex] === 0 && this.me.ammos[0] != this.me.ammos[1]) this.inputs[10] = -1
     }
     
     autoReload() {
@@ -617,9 +620,7 @@ class Hack {
             this.camera.camLookAt(null)
             if (this.settings.autoAim === 1) {
                 this.camera.mouseDownL = 0
-                if (this.camera.mouseDownR !== 0) {
-                    this.camera.mouseDownR = 0
-                }
+                if (this.camera.mouseDownR !== 0) this.camera.mouseDownR = 0
             } else if (this.settings.autoAim === 2) {
                 this.camera.mouseDownR = 0
                 this.camera.mouseDownL = 0
@@ -708,6 +709,7 @@ GM_xmlhttpRequest({
             .replace(/window\.updateWindow=function/, 'windows.push({header: "Hack Settings", html: "",gen: function () {var t = ""; for (var key in window.hack.settingsMenu) {window.hack.settingsMenu[key].pre && (t += window.hack.settingsMenu[key].pre), t += "<div class=\'settName\'>" + window.hack.settingsMenu[key].name + " " + window.hack.settingsMenu[key].html() + "</div>";} return t;}});window.hack.setupSettings();\nwindow.updateWindow=function')
             .replace(/window\.addEventListener\("keydown",function\((\w+)\){/, 'window.addEventListener("keydown",function($1){window.hack.keyDown($1),')
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
+            .replace(/window\.addEventListener\("keypress",function\((\w+)\){/, 'window.addEventListener("keypress",function($1){window.hack.keyPress($1),')
             .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display')
             .replace(/(\w+)\("Kicked for inactivity"\)\),(.*),requestAnimFrame\((\w+)\)/, '$1("Kicked for inactivity")),requestAnimFrame($3)');
 
