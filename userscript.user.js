@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.9
+// @version      3.10
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -50,6 +50,7 @@ class Hack {
             autoReload: false,
             speedHack: false,
             weaponScope: 0,
+            crosshair: 0
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -147,6 +148,20 @@ class Hack {
                 },
                 set(t) {
                     self.settings.tracers = t;
+                }
+            },
+            crosshair: {
+                name: "Crosshair",
+                val: 0,
+                html() {
+                    return `<select onchange="window.hack.setSetting('crosshair', this.value)">
+                    <option value="0"${self.settingsMenu.crosshair.val == 0 ? " selected" : ""}>Default</option>
+                    <option value="1"${self.settingsMenu.crosshair.val == 1 ? " selected" : ""}>Small</option>
+                    <option value="2"${self.settingsMenu.crosshair.val == 2 ? " selected" : ""}>Smallest</option>
+                    </select>`
+                },
+                set(t) {
+                    self.settings.crosshair = parseInt(t);
                 }
             },
             bhop: {
@@ -356,6 +371,15 @@ class Hack {
             case 'P':
                 this.settings.speedHack = !this.settings.speedHack;
                 this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack === true ? 'green' : 'red'}'>${this.settings.speedHack === true ? "Enabled" : "Disabled"}</span>`, !0)
+                break;
+                
+            case 'O':
+                this.settings.crosshair++;
+                if (this.settings.crosshair > 2) this.settings.crosshair = 0
+                this.setSetting('crosshair', this.settings.crosshair)
+                let crosshairs = ['Default', 'Small', 'Smallest']
+                opt = crosshairs[this.settings.crosshair]
+                this.chatMessage(null, `<span style='color:#fff'>Crosshair - </span> <span style='color:${this.settings.crosshair > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
 
             case ' ':
@@ -641,6 +665,13 @@ class Hack {
             this.hooks.config.camChaseDst = 24
         }
     }
+    
+    getCrosshair(t) {
+        //34.5 = small
+        //27.5 = smallest
+        if (!this.settings.crosshair > 0) return t
+        return this.settings.crosshair === 1 ? 34.5 : 27.5
+    }
 
     render() {
         this.ctx.clearRect(0, 0, innerWidth, innerHeight)
@@ -711,7 +742,8 @@ GM_xmlhttpRequest({
             .replace(/window\.addEventListener\("keyup",function\((\w+)\){/, 'window.addEventListener("keyup",function($1){window.hack.keyUp($1),')
             .replace(/window\.addEventListener\("keypress",function\((\w+)\){/, 'window.addEventListener("keypress",function($1){window.hack.keyPress($1),')
             .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display')
-            .replace(/(\w+)\("Kicked for inactivity"\)\),(.*),requestAnimFrame\((\w+)\)/, '$1("Kicked for inactivity")),requestAnimFrame($3)');
+            .replace(/(\w+)\("Kicked for inactivity"\)\),(.*),requestAnimFrame\((\w+)\)/, '$1("Kicked for inactivity")),requestAnimFrame($3)')
+            .replace(/(\w+).updateCrosshair=function\((\w+),(\w+)\){/, '$1.updateCrosshair=function($2,$3){$2=window.hack.getCrosshair($2);')
 
 
         GM_xmlhttpRequest({
