@@ -16,6 +16,7 @@
 - Auto Respawn
 - Auto Weapon Swap
 - Auto Reload
+- Crosshair Mod
 
 ## KeyBinds:
 - T: Cycle Through Aimbot Modes
@@ -24,6 +25,7 @@
 - U: Cycle Through Player ESP Colors
 - I: Change Scope
 - P: Enable/Disable Speedhack
+- O: Cycle Through Crosshair Sizes
 
 ### Requirements:
 - Tampermonkey
