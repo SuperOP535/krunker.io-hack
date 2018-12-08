@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.10
+// @version      3.11
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -156,8 +156,9 @@ class Hack {
                 html() {
                     return `<select onchange="window.hack.setSetting('crosshair', this.value)">
                     <option value="0"${self.settingsMenu.crosshair.val == 0 ? " selected" : ""}>Default</option>
-                    <option value="1"${self.settingsMenu.crosshair.val == 1 ? " selected" : ""}>Small</option>
-                    <option value="2"${self.settingsMenu.crosshair.val == 2 ? " selected" : ""}>Smallest</option>
+                    <option value="1"${self.settingsMenu.crosshair.val == 1 ? " selected" : ""}>Medium</option>
+                    <option value="2"${self.settingsMenu.crosshair.val == 2 ? " selected" : ""}>Small</option>
+                    <option value="3"${self.settingsMenu.crosshair.val == 3 ? " selected" : ""}>Smallest</option>
                     </select>`
                 },
                 set(t) {
@@ -375,9 +376,9 @@ class Hack {
                 
             case 'O':
                 this.settings.crosshair++;
-                if (this.settings.crosshair > 2) this.settings.crosshair = 0
+                if (this.settings.crosshair > 3) this.settings.crosshair = 0
                 this.setSetting('crosshair', this.settings.crosshair)
-                let crosshairs = ['Default', 'Small', 'Smallest']
+                let crosshairs = ['Default', 'Medium', 'Small', 'Smallest']
                 opt = crosshairs[this.settings.crosshair]
                 this.chatMessage(null, `<span style='color:#fff'>Crosshair - </span> <span style='color:${this.settings.crosshair > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
@@ -667,10 +668,11 @@ class Hack {
     }
     
     getCrosshair(t) {
-        //34.5 = small
-        //27.5 = smallest
+        //46.75 = small
+        //39.75 = smallest
+        //52.75 = Medium
         if (!this.settings.crosshair > 0) return t
-        return this.settings.crosshair === 1 ? 34.5 : 27.5
+        return this.settings.crosshair === 1 ? 52.75 : (this.settings.crosshair === 2 ? 46.75 : 39.75)
     }
 
     render() {
