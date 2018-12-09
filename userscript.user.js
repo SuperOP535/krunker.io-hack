@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.12
+// @version      3.13
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -19,7 +19,7 @@ class Hack {
         this.inputs = null
         this.game = null
         this.fps = {
-            cur: 0, 
+            cur: 0,
             times: [],
             elm: null
         }
@@ -335,7 +335,6 @@ class Hack {
                 opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic')
                 this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
-
             case 'T':
                 this.settings.autoAim++
                 if (this.settings.autoAim > 4) this.settings.autoAim = 0
@@ -343,7 +342,6 @@ class Hack {
                 opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')))
                 this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
-
             case 'Y':
                 this.settings.esp++
                 if (this.settings.esp > 2) this.settings.esp = 0
@@ -351,15 +349,13 @@ class Hack {
                 opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full')
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
-
             case 'U':
                 this.settings.espColor++;
                 if (this.settings.espColor > 4) this.settings.espColor = 0
                 this.setSetting('espColor', this.settings.espColor)
                 opt = this.colors[this.settings.espColor]
                 this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, !0)
-                break
-
+                break;
             case 'I':
                 this.settings.weaponScope++;
                 if (this.settings.weaponScope > 2) this.settings.weaponScope = 0
@@ -368,12 +364,10 @@ class Hack {
                 opt = scopes[this.settings.weaponScope]
                 this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
-
             case 'P':
                 this.settings.speedHack = !this.settings.speedHack;
                 this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack === true ? 'green' : 'red'}'>${this.settings.speedHack === true ? "Enabled" : "Disabled"}</span>`, !0)
                 break;
-                
             case 'O':
                 this.settings.crosshair++;
                 if (this.settings.crosshair > 3) this.settings.crosshair = 0
@@ -382,7 +376,6 @@ class Hack {
                 opt = crosshairs[this.settings.crosshair]
                 this.chatMessage(null, `<span style='color:#fff'>Crosshair - </span> <span style='color:${this.settings.crosshair > 0 ? 'green' : 'red'}'>${opt}</span>`, !0)
                 break;
-
             case ' ':
                 if (this.settings.bhop !== 2) return
                 this.settings.bhopHeld = true
@@ -394,7 +387,7 @@ class Hack {
         if (document.activeElement.id === 'chatInput') return
         if (event.keyCode === 32) this.settings.bhop !== 2 ? void 0 : this.settings.bhopHeld = false
     }
-    
+
     keyPress(event) {
         return // will be used later
         if (document.activeElement.id === 'chatInput') return
@@ -560,17 +553,17 @@ class Hack {
         if (!this.settings.autoSwap || !this.me.weapon.ammo || this.me.ammos.length < 2) return
         if (this.me.ammos[this.me.weaponIndex] === 0 && this.me.ammos[0] != this.me.ammos[1]) this.inputs[10] = -1
     }
-    
+
     autoReload() {
         if (!this.settings.autoReload || !this.me.weapon.ammo) return
         if (this.me.ammos[this.me.weaponIndex] === 0 && this.inputs[9] === 0) this.inputs[9] = 1
     }
-    
+
     speedHack() {
         if (!this.settings.speedHack) return
         this.inputs[1] *= 1.375
     }
-    
+
     weaponScope() {
         if (this.settings.weaponScope === 0) if (this.me.weapon.name === "Sniper Rifle" || this.me.weapon.name === "Semi Auto") this.me.weapon.scope = 1; else delete this.me.weapon.scope
         if (this.settings.weaponScope === 1) delete this.me.weapon.scope; else if (this.settings.weaponScope === 2) this.me.weapon.scope = 1
@@ -666,11 +659,11 @@ class Hack {
             this.hooks.config.camChaseDst = 24
         }
     }
-    
+
     getCrosshair(t) {
-        //46.75 = small
-        //39.75 = smallest
-        //52.75 = Medium
+        // 46.75 = small
+        // 39.75 = smallest
+        // 52.75 = Medium
         if (!this.settings.crosshair > 0) return t
         return this.settings.crosshair === 1 ? 52.75 : (this.settings.crosshair === 2 ? 46.75 : 39.75)
     }
@@ -725,7 +718,7 @@ class Hack {
 
 GM_xmlhttpRequest({
     method: "GET",
-    url: (document.location.href.indexOf('krunker_beta') > 0 ? "https://krunker_beta.krunker.io/" : "https://krunker.io/") + "js/game.js",
+    url: `${document.location.origin}/js/game.js`,
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
@@ -750,7 +743,7 @@ GM_xmlhttpRequest({
 
         GM_xmlhttpRequest({
             method: "GET",
-            url: document.location.href.indexOf('krunker_beta') > 0 ? "https://krunker_beta.krunker.io/" : "https://krunker.io/",
+            url: document.location.origin,
             onload: res => {
                 let html = res.responseText
                 html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`)
