@@ -3,9 +3,9 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.11
+// @version      3.12
 // @author       Faber, Tehchy
-// @include      /^(https?:\/\/)?(www\.)?krunker\.io(|\/|\/\?server=.+)$/
+// @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?server=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
@@ -725,7 +725,7 @@ class Hack {
 
 GM_xmlhttpRequest({
     method: "GET",
-    url: "https://krunker.io/js/game.js",
+    url: (document.location.href.indexOf('krunker_beta') > 0 ? "https://krunker_beta.krunker.io/" : "https://krunker.io/") + "js/game.js",
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
@@ -750,7 +750,7 @@ GM_xmlhttpRequest({
 
         GM_xmlhttpRequest({
             method: "GET",
-            url: "https://krunker.io/",
+            url: document.location.href.indexOf('krunker_beta') > 0 ? "https://krunker_beta.krunker.io/" : "https://krunker.io/",
             onload: res => {
                 let html = res.responseText
                 html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`)
