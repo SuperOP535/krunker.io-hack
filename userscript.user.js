@@ -3,7 +3,7 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.16
+// @version      3.17
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -738,7 +738,7 @@ class Hack {
 
 GM_xmlhttpRequest({
     method: "GET",
-    url: `${document.location.origin}/js/game.js?build=`,
+    url: `${document.location.origin}/js/game.js`,
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
@@ -767,7 +767,7 @@ GM_xmlhttpRequest({
             url: document.location.origin,
             onload: res => {
                 let html = res.responseText;
-                html = html.replace(/ src="js\/game\.js\?build=(.+)">/, `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`);
+                html = html.replace(/ src="js\/game\.js">/, `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`);
                 document.open();
                 document.write(html);
                 document.close();
