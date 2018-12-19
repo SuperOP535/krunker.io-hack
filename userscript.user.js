@@ -3,7 +3,7 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.14
+// @version      3.15
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -720,7 +720,7 @@ class Hack {
 
 GM_xmlhttpRequest({
     method: "GET",
-    url: `${document.location.origin}/js/game.js`,
+    url: `${document.location.origin}/js/game.js?build=`,
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
@@ -743,6 +743,7 @@ GM_xmlhttpRequest({
             .replace(/(\w+).updateCrosshair=function\((\w+),(\w+)\){/, '$1.updateCrosshair=function($2,$3){$2=window.hack.getCrosshair($2);')
             .replace(/antialias:!1/g, 'antialias:window.hack.settings.antiAlias ? 1 : !1')
             .replace(/precision:"mediump"/g, 'precision:window.hack.settings.highPrecision ? "highp": "mediump"')
+            .replace(/setTimeout\(\(\)=>{!(.*)},2500\);/, '')
 
 
         GM_xmlhttpRequest({
@@ -750,7 +751,7 @@ GM_xmlhttpRequest({
             url: document.location.origin,
             onload: res => {
                 let html = res.responseText
-                html = html.replace(' src="js/game.js">', `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`)
+                html = html.replace(/ src="js\/game\.js\?build=(.+)">/, `>${Hack.toString()}\nwindow.hack = new Hack();\n${code.toString()}`)
                 document.open()
                 document.write(html)
                 document.close()
