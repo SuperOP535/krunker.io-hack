@@ -3,9 +3,9 @@
 // @description  Krunker.io Hack
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.13
+// @version      3.14
 // @author       Faber, Tehchy
-// @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?server=.+)$/
+// @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
@@ -50,7 +50,9 @@ class Hack {
             autoReload: false,
             speedHack: false,
             weaponScope: 0,
-            crosshair: 0
+            crosshair: 0,
+            antiAlias: false,
+            highPrecision: false,
         }
         this.settingsMenu = [];
         this.aimbot = {
@@ -739,6 +741,8 @@ GM_xmlhttpRequest({
             .replace(/hitHolder\.innerHTML=(\w+)}\((\w+)\),(\w+).update\((\w+)\)(.*)"block"==nukeFlash\.style\.display/, 'hitHolder.innerHTML=$1}($2),$3.update($4),"block" === nukeFlash.style.display')
             .replace(/(\w+)\("Kicked for inactivity"\)\),(.*),requestAnimFrame\((\w+)\)/, '$1("Kicked for inactivity")),requestAnimFrame($3)')
             .replace(/(\w+).updateCrosshair=function\((\w+),(\w+)\){/, '$1.updateCrosshair=function($2,$3){$2=window.hack.getCrosshair($2);')
+            .replace(/antialias:!1/g, 'antialias:window.hack.settings.antiAlias ? 1 : !1')
+            .replace(/precision:"mediump"/g, 'precision:window.hack.settings.highPrecision ? "highp": "mediump"')
 
 
         GM_xmlhttpRequest({
