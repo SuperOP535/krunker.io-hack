@@ -3,7 +3,7 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      3.17
+// @version      4.0
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -36,6 +36,7 @@ class Hack {
         this.settings = {
             esp: 1,
             espColor: 0,
+            espFontSize: 14,
             bhop: 0,
             bhopHeld: false,
             fpsCounter: true,
@@ -49,7 +50,7 @@ class Hack {
             autoRespawn: false,
             autoSwap: false,
             autoReload: false,
-            speedHack: false,
+            speedHack: 1,
             weaponScope: 0,
             crosshair: 0,
             antiAlias: false,
@@ -143,6 +144,21 @@ class Hack {
                     self.settings.espColor = parseInt(t)
                 }
             },
+            espFontSize: {
+                name: "Player ESP Font Size",
+                val: 14,
+                html() {
+                    return `<select onchange="window.hack.setSetting('espFontSize', this.value)">
+                    <option value="10"${self.settingsMenu.espFontSize.val == 10 ? " selected" : ""}>Small</option>
+                    <option value="14"${self.settingsMenu.espFontSize.val == 14 ? " selected" : ""}>Medium</option>
+                    <option value="20"${self.settingsMenu.espFontSize.val == 20 ? " selected" : ""}>Large</option>
+                    <option value="26"${self.settingsMenu.espFontSize.val == 26 ? " selected" : ""}>Giant</option>
+                    </select>`
+                },
+                set(t) {
+                    self.settings.espFontSize = parseInt(t)
+                }
+            },
             tracers: {
                 name: "Player Tracers",
                 val: 1,
@@ -181,9 +197,9 @@ class Hack {
             },
             speedHack: {
                 name: "Speed hack",
-                val: 0,
+                val: 1,
                 html() {
-                    return `<label class='switch'><input type='checkbox' onclick='window.hack.setSetting("speedHack", this.checked)' ${self.settingsMenu.speedHack.val ? "checked" : ""}><span class='slider'></span></label>`
+                    return `<span class='sliderVal' id='slid_hack_speedHack'>${self.settingsMenu.speedHack.val}</span><div class='slidecontainer'><input type='range' min='1' max='1.375' step='0.01' value='${self.settingsMenu.speedHack.val}' class='sliderM' oninput="window.hack.setSetting('speedHack', this.value)"></div>`
                 },
                 set(t) {
                     self.settings.speedHack = t
@@ -357,25 +373,26 @@ class Hack {
                 break;
             }
             case 'U': {
-                    this.settings.espColor++;
-                    if (this.settings.espColor > 4) this.settings.espColor = 0;
-                    this.setSetting('espColor', this.settings.espColor);
-                    opt = this.colors[this.settings.espColor];
-                    this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, true);
-                    break;
+                this.settings.espColor++;
+                if (this.settings.espColor > 4) this.settings.espColor = 0;
+                this.setSetting('espColor', this.settings.espColor);
+                opt = this.colors[this.settings.espColor];
+                this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, true);
+                break;
             }
             case 'I': {
-                    this.settings.weaponScope++;
-                    if (this.settings.weaponScope > 2) this.settings.weaponScope = 0;
-                    this.setSetting('weaponScope', this.settings.weaponScope);
-                    let scopes = ['Default', 'Iron Sight', 'Sniper Scope'];
-                    opt = scopes[this.settings.weaponScope];
-                    this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                    break;
+                this.settings.weaponScope++;
+                if (this.settings.weaponScope > 2) this.settings.weaponScope = 0;
+                this.setSetting('weaponScope', this.settings.weaponScope);
+                let scopes = ['Default', 'Iron Sight', 'Sniper Scope'];
+                opt = scopes[this.settings.weaponScope];
+                this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                break;
             }
             case 'P': {
-                this.settings.speedHack = !this.settings.speedHack;
-                this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack === true ? 'green' : 'red'}'>${this.settings.speedHack === true ? "Enabled" : "Disabled"}</span>`, !0);
+                this.settings.speedHack = this.settings.speedHack > 1 ? 1 : 1.375;
+                this.setSetting('speedHack', this.settings.speedHack);
+                this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack > 1 ? 'green' : 'red'}'>${this.settings.speedHack > 1 ? "Enabled" : "Disabled"}</span>`, !0);
                 break;
             }
             case 'O': {
@@ -453,21 +470,36 @@ class Hack {
         if (this.me.weapon.range) return this.me.weapon.range + 25;
         return 9999;
     }
+        
+    world2Screen(pos, aY = 0) {
+        pos.y += aY;
+        pos.project(this.hooks.world.camera);
+        pos.x = (pos.x + 1) / 2;
+        pos.y = (-pos.y + 1) / 2;
+        pos.x *= this.canvas.width;
+        pos.y *= this.canvas.height;
+        return pos;
+    }
+
+    pixelTranslate(ctx, x, y) {
+        ctx.translate(~~x, ~~y);
+    }
 
     text(txt, font, color, x, y) {
         this.ctx.save();
-        this.ctx.translate(x, y);
-        this.ctx.beginPath();
+        this.pixelTranslate(this.ctx, x, y);
         this.ctx.fillStyle = color;
+        this.ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
         this.ctx.font = font;
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeText(txt, 0, 0);
         this.ctx.fillText(txt, 0, 0);
-        this.ctx.closePath();
         this.ctx.restore();
     }
 
     rect(x, y, ox, oy, w, h, color, fill) {
         this.ctx.save();
-        this.ctx.translate(x, y);
+        this.pixelTranslate(this.ctx, x, y);
         this.ctx.beginPath();
         fill ? this.ctx.fillStyle = color : this.ctx.strokeStyle = color;
         this.ctx.rect(ox, oy, w, h);
@@ -478,11 +510,14 @@ class Hack {
 
     line(x1, y1, x2, y2, lW, sS) {
         this.ctx.save();
-        this.ctx.lineWidth = lW;
+        this.ctx.lineWidth = lW + 2;
         this.ctx.beginPath();
-        this.ctx.strokeStyle = sS;
         this.ctx.moveTo(x1, y1);
         this.ctx.lineTo(x2, y2);
+        this.ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
+        this.ctx.stroke();
+        this.ctx.lineWidth = lW;
+        this.ctx.strokeStyle = sS;
         this.ctx.stroke();
         this.ctx.restore();
     }
@@ -495,37 +530,89 @@ class Hack {
         this.ctx.closePath();
         this.ctx.restore();
     }
+    
+    gradient(x, y, w, h, colors) {
+        let grad = this.ctx.createLinearGradient(x, y, w, h);
+        for (let i = 0; i < colors.length; i++) {
+            grad.addColorStop(i, colors[i]);
+        }
+        return grad;
+    }
+
+    getTextMeasurements(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = ~~this.ctx.measureText(arr[i]).width;
+        }
+        return arr;
+    }
 
     drawESP() {
-        for (const entity of this.hooks.entities.filter(x => !x.isYou)) {
-            if (entity.active) {
-                const me = this.hooks.world.camera.getWorldPosition();
-                const target = entity.objInstances.position.clone();
-                const dist = 1 - this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 600;
-                if (20 * dist >= 1 && this.hooks.world.frustum.containsPoint(target)) {
-                    const scale = Math.max(.1, 1 - this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 600);
-                    const targetX = entity.hookedX;
-                    const targetY = entity.hookedY + 60 * scale;
-                    const offsetX = 80;
-                    const offsetY = 180;
-                    const color = this.colors[this.settings.espColor];
-                    if (this.settings.esp > 0) {
-                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, offsetY * scale, "black", false);
-                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, offsetY * scale, "green", true);
-                        this.rect(targetX - (offsetX * scale / 2) - (40 * scale / 2), targetY - (offsetY * scale / 2), 0, 0, 20 * scale, (entity.maxHealth - entity.health) / entity.maxHealth * offsetY * scale, "red", true);
-                        this.rect(targetX - (offsetX * scale / 2), targetY - (offsetY * scale / 2), 0, 0, offsetX * scale, offsetY * scale, "black", false);
-                        if (this.settings.esp === 1) {
-                            const fontSize = 26 * scale > 13 ? 13 : 26 * scale;
-                            let spacing = scale < 0.5 ? 2 : 0;
-                            this.text(`Name: ${entity.name} ${entity.clan ? `[${entity.clan}]` : ``} Lvl: ${entity.level}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 4 : 10 * scale));
-                            this.text(`Distance: ${~~this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z)}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 25 * scale));
-                            this.text(`Health: ${entity.health}/${entity.maxHealth}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 40 * scale));
-                            this.text(`Weapon: ${entity.weapon.name}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 55 * scale));
-                            if (entity.weapon.ammo) this.text(`Ammo: ${entity.ammos[entity.weaponIndex]} / ${entity.weapon.ammo}`, `${fontSize}px`, color, targetX + (offsetX * scale / 2), targetY - (offsetY * scale / 2) + (spacing ? spacing += 7 : 70 * scale));
+        let padding = 2;
+        const me = this.hooks.world.camera.getWorldPosition()
+        for (const entity of this.hooks.entities.filter(x => !x.isYou && x.active)) {
+            if (!entity.rankIcon && entity.level > 0) {
+                let rankVar = entity.level > 0 ? Math.ceil(entity.level / 3) * 3 : entity.level < 0 ? Math.floor(entity.level / 3) * 3 : entity.level;
+                let rankId = Math.max(Math.min(100, rankVar - 2), 0);
+                entity.rankIcon = new Image();
+                entity.rankIcon.src = `./img/levels/${rankId}.png`;
+            }
+            const target = entity.objInstances.position.clone();
+            if (this.hooks.world.frustum.containsPoint(target)) {
+                let screenR = this.world2Screen(entity.objInstances.position.clone());
+                let screenH = this.world2Screen(entity.objInstances.position.clone(), entity.height);
+                let hDiff = ~~(screenR.y - screenH.y);
+                let bWidth = ~~(hDiff * 0.6);
+
+                const color = this.colors[this.settings.espColor]; // will return later
+                if (this.settings.esp > 0) {
+                    this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#000000', false);
+                    this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#44FF44', true);
+                    this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, ~~((entity.maxHealth - entity.health) / entity.maxHealth * (hDiff + 2)), '#000000', true);
+                    
+                    this.ctx.save();
+                    this.ctx.lineWidth = 4;
+                    this.pixelTranslate(this.ctx, screenH.x - bWidth / 2, screenH.y);
+                    this.ctx.beginPath();
+                    this.ctx.rect(0, 0, bWidth, hDiff);
+                    this.ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
+                    this.ctx.stroke();
+                    this.ctx.lineWidth = 2;
+                    this.ctx.strokeStyle = entity.team === null ? '#FF4444' : this.getMyself().team === entity.team ? '#44AAFF' : '#FF4444';
+                    this.ctx.stroke();
+                    this.ctx.closePath();
+                    this.ctx.restore();
+                        
+                    if (this.settings.esp === 1) {
+                        let playerDist = parseInt(this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 10);
+                        this.ctx.save();
+                        this.ctx.font = `${this.settings.espFontSize}px GameFont`;
+                        let meas = this.getTextMeasurements(["[", `${playerDist}`, "m]", `${entity.level}`, "©", entity.name]);
+                        this.ctx.restore();
+
+                        let grad2 = this.gradient(0, 0, meas[4] * 5, 0, ["rgba(0, 0, 0, 0.25)", "rgba(0, 0, 0, 0)"]);
+                        if (entity.rankIcon && entity.rankIcon.complete) {
+                            let grad = this.gradient(0, 0, (meas[4] * 2) + meas[3] + (padding * 3), 0, ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.25)"]);
+                            this.rect(~~(screenH.x - bWidth / 2) - 12 - (meas[4] * 2) - meas[3] - (padding * 3), ~~screenH.y - padding, 0, 0, (meas[4] * 2) + meas[3] + (padding * 3), meas[4] + (padding * 2), grad, true);
+                            
+                            this.ctx.drawImage(entity.rankIcon, ~~(screenH.x - bWidth / 2) - 16 - (meas[4] * 2) - meas[3], ~~screenH.y - (meas[4] * 0.5), entity.rankIcon.width * ((meas[4] * 2) / entity.rankIcon.width) , entity.rankIcon.height * ((meas[4] * 2) / entity.rankIcon.height));
+                            this.text(`${entity.level}`, `${this.settings.espFontSize}px GameFont`, '#FFFFFF', ~~(screenH.x - bWidth / 2) - 16 - meas[3], ~~screenH.y + meas[4] * 1);
                         }
+
+                        this.rect(~~(screenH.x + bWidth / 2) + padding, ~~screenH.y - padding, 0, 0, (meas[4] * 5), (meas[4] * 4) + (padding * 2), grad2, true);
+
+						this.text(entity.name, `${this.settings.espFontSize}px GameFont`, entity.team === null ? '#FFCDB4' : this.getMyself().team === entity.team ? '#B4E6FF' : '#FFCDB4', (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 1)
+                        if (entity.clan) {
+                            this.text(`[${entity.clan}]`, `${this.settings.espFontSize}px GameFont`, '#AAAAAA', (screenH.x + bWidth / 2) + 8 + name_mes, screenH.y + meas[4] * 1)
+                        }
+						this.text(`${entity.health} HP`, `${this.settings.espFontSize}px GameFont`, "#33FF33", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 2)
+						this.text(`${entity.weapon.name}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 3)
+                        
+                        this.text("[", `${this.settings.espFontSize}px GameFont`, "#AAAAAA", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 4)
+                        this.text(`${playerDist}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4 + meas[0], screenH.y + meas[4] * 4)
+                        this.text("m]", `${this.settings.espFontSize}px GameFont`, "#AAAAAA", (screenH.x + bWidth / 2) + 4 + meas[0] + meas[1], screenH.y + meas[4] * 4)
                     }
-                    if (this.settings.tracers) this.line(innerWidth / 2, innerHeight - 1, targetX, targetY, 2, entity.team === null ? "red" : this.getMyself().team === entity.team ? "green" : "red");
                 }
+                if (this.settings.tracers) this.line(innerWidth / 2, innerHeight - 1, screenR.x, screenR.y, 2, entity.team === null ? '#FF4444' : this.getMyself().team === entity.team ? '#44AAFF' : '#FF4444');
             }
         }
     }
@@ -572,8 +659,7 @@ class Hack {
     }
 
     speedHack() {
-        if (!this.settings.speedHack) return;
-        this.inputs[1] *= 1.375;
+        this.inputs[1] *= this.settings.speedHack;
     }
 
     weaponScope() {
@@ -712,7 +798,7 @@ class Hack {
     }
 
     setSetting(t, e) {
-        if (document.getElementById(`slid_hack${t}`)) document.getElementById(`slid_hack${t}`).innerHTML = e;
+        if (document.getElementById(`slid_hack_${t}`)) document.getElementById(`slid_hack_${t}`).innerHTML = e;
         this.settingsMenu[t].set(e);
         this.settingsMenu[t].val = e;
         this.saveVal(`kro_set_hack_${t}`, e);
