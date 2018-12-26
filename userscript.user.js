@@ -3,14 +3,14 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      4.1
+// @version      4.2
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
 
-/* eslint-env es6*/
+/* eslint-env es6 */
 window.stop();
 document.innerHTML = "";
 
@@ -348,67 +348,75 @@ class Hack {
         if (document.activeElement.id === 'chatInput') return;
         let opt = null;
         switch (event.key.toUpperCase()) {
-            case 'B': {
-                this.settings.bhop++;
-                if (this.settings.bhop > 2) this.settings.bhop = 0;
-                this.setSetting('bhop', this.settings.bhop);
-                opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic');
-                this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                break;
-            }
-            case 'T': {
-                this.settings.autoAim++;
-                if (this.settings.autoAim > 4) this.settings.autoAim = 0;
-                this.setSetting('autoAim', this.settings.autoAim);
-                opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')));
-                this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                break;
-            }
-            case 'Y': {
-                this.settings.esp++;
-                if (this.settings.esp > 2) this.settings.esp = 0;
-                this.setSetting('esp', this.settings.esp);
-                opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full');
-                this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                break;
-            }
-            case 'U': {
-                this.settings.espColor++;
-                if (this.settings.espColor > 4) this.settings.espColor = 0;
-                this.setSetting('espColor', this.settings.espColor);
-                opt = this.colors[this.settings.espColor];
-                this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, true);
-                break;
-            }
-            case 'I': {
-                this.settings.weaponScope++;
-                if (this.settings.weaponScope > 2) this.settings.weaponScope = 0;
-                this.setSetting('weaponScope', this.settings.weaponScope);
-                let scopes = ['Default', 'Iron Sight', 'Sniper Scope'];
-                opt = scopes[this.settings.weaponScope];
-                this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                break;
-            }
-            case 'P': {
-                this.settings.speedHack = this.settings.speedHack > 1 ? 1 : 1.375;
-                this.setSetting('speedHack', this.settings.speedHack);
-                this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack > 1 ? 'green' : 'red'}'>${this.settings.speedHack > 1 ? "Enabled" : "Disabled"}</span>`, !0);
-                break;
-            }
-            case 'O': {
-                this.settings.crosshair++;
-                if (this.settings.crosshair > 3) this.settings.crosshair = 0;
-                this.setSetting('crosshair', this.settings.crosshair);
-                let crosshairs = ['Default', 'Medium', 'Small', 'Smallest'];
-                opt = crosshairs[this.settings.crosshair];
-                this.chatMessage(null, `<span style='color:#fff'>Crosshair - </span> <span style='color:${this.settings.crosshair > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
-                break;
-            }
-            case ' ': {
-                if (this.settings.bhop !== 2) return;
-                this.settings.bhopHeld = true;
-                break;
-            }
+            case 'B':
+                {
+                    this.settings.bhop++;
+                    if (this.settings.bhop > 2) this.settings.bhop = 0;
+                    this.setSetting('bhop', this.settings.bhop);
+                    opt = this.settings.bhop === 0 ? 'Disabled' : (this.settings.bhop === 2 ? 'Manual' : 'Automatic');
+                    this.chatMessage(null, `<span style='color:#fff'>BHop - </span> <span style='color:${this.settings.bhop > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                    break;
+                }
+            case 'T':
+                {
+                    this.settings.autoAim++;
+                    if (this.settings.autoAim > 4) this.settings.autoAim = 0;
+                    this.setSetting('autoAim', this.settings.autoAim);
+                    opt = this.settings.autoAim === 0 ? 'Disabled' : (this.settings.autoAim === 4 ? 'Hip Fire' : (this.settings.autoAim === 3 ? 'Manual' : (this.settings.autoAim === 2 ? 'Quickscoper' : 'TriggerBot')));
+                    this.chatMessage(null, `<span style='color:#fff'>AutoAim - </span> <span style='color:${this.settings.autoAim > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                    break;
+                }
+            case 'Y':
+                {
+                    this.settings.esp++;
+                    if (this.settings.esp > 2) this.settings.esp = 0;
+                    this.setSetting('esp', this.settings.esp);
+                    opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full');
+                    this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                    break;
+                }
+            case 'U':
+                {
+                    this.settings.espColor++;
+                    if (this.settings.espColor > 4) this.settings.espColor = 0;
+                    this.setSetting('espColor', this.settings.espColor);
+                    opt = this.colors[this.settings.espColor];
+                    this.chatMessage(null, `<span style='color:#fff'>Player ESP Color - </span> <span style='color:${opt.toLowerCase()}'>${opt}</span>`, true);
+                    break;
+                }
+            case 'I':
+                {
+                    this.settings.weaponScope++;
+                    if (this.settings.weaponScope > 2) this.settings.weaponScope = 0;
+                    this.setSetting('weaponScope', this.settings.weaponScope);
+                    let scopes = ['Default', 'Iron Sight', 'Sniper Scope'];
+                    opt = scopes[this.settings.weaponScope];
+                    this.chatMessage(null, `<span style='color:#fff'>Weapon Scope - </span> <span style='color:${this.settings.weaponScope > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                    break;
+                }
+            case 'P':
+                {
+                    this.settings.speedHack = this.settings.speedHack > 1 ? 1 : 1.375;
+                    this.setSetting('speedHack', this.settings.speedHack);
+                    this.chatMessage(null, `<span style='color:#fff'>Player SpeedHack - </span> <span style='color:${this.settings.speedHack > 1 ? 'green' : 'red'}'>${this.settings.speedHack > 1 ? "Enabled" : "Disabled"}</span>`, !0);
+                    break;
+                }
+            case 'O':
+                {
+                    this.settings.crosshair++;
+                    if (this.settings.crosshair > 3) this.settings.crosshair = 0;
+                    this.setSetting('crosshair', this.settings.crosshair);
+                    let crosshairs = ['Default', 'Medium', 'Small', 'Smallest'];
+                    opt = crosshairs[this.settings.crosshair];
+                    this.chatMessage(null, `<span style='color:#fff'>Crosshair - </span> <span style='color:${this.settings.crosshair > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
+                    break;
+                }
+            case ' ':
+                {
+                    if (this.settings.bhop !== 2) return;
+                    this.settings.bhopHeld = true;
+                    break;
+                }
         }
     }
 
@@ -470,7 +478,7 @@ class Hack {
         if (this.me.weapon.range) return this.me.weapon.range + 25;
         return 9999;
     }
-        
+
     world2Screen(pos, aY = 0) {
         pos.y += aY;
         pos.project(this.hooks.world.camera);
@@ -530,7 +538,7 @@ class Hack {
         this.ctx.closePath();
         this.ctx.restore();
     }
-    
+
     gradient(x, y, w, h, colors) {
         let grad = this.ctx.createLinearGradient(x, y, w, h);
         for (let i = 0; i < colors.length; i++) {
@@ -562,13 +570,11 @@ class Hack {
                 let screenH = this.world2Screen(entity.objInstances.position.clone(), entity.height);
                 let hDiff = ~~(screenR.y - screenH.y);
                 let bWidth = ~~(hDiff * 0.6);
-
-                const color = this.colors[this.settings.espColor]; // will return later
+                const color = this.colors[this.settings.espColor];
                 if (this.settings.esp > 0) {
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#000000', false);
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#44FF44', true);
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, ~~((entity.maxHealth - entity.health) / entity.maxHealth * (hDiff + 2)), '#000000', true);
-                    
                     this.ctx.save();
                     this.ctx.lineWidth = 4;
                     this.pixelTranslate(this.ctx, screenH.x - bWidth / 2, screenH.y);
@@ -581,32 +587,24 @@ class Hack {
                     this.ctx.stroke();
                     this.ctx.closePath();
                     this.ctx.restore();
-                        
                     if (this.settings.esp === 1) {
                         let playerDist = parseInt(this.getDistance3D(me.x, me.y, me.z, target.x, target.y, target.z) / 10);
                         this.ctx.save();
                         this.ctx.font = `${this.settings.espFontSize}px GameFont`;
                         let meas = this.getTextMeasurements(["[", `${playerDist}`, "m]", `${entity.level}`, "©", entity.name]);
                         this.ctx.restore();
-
                         let grad2 = this.gradient(0, 0, meas[4] * 5, 0, ["rgba(0, 0, 0, 0.25)", "rgba(0, 0, 0, 0)"]);
                         if (entity.rankIcon && entity.rankIcon.complete) {
                             let grad = this.gradient(0, 0, (meas[4] * 2) + meas[3] + (padding * 3), 0, ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.25)"]);
                             this.rect(~~(screenH.x - bWidth / 2) - 12 - (meas[4] * 2) - meas[3] - (padding * 3), ~~screenH.y - padding, 0, 0, (meas[4] * 2) + meas[3] + (padding * 3), meas[4] + (padding * 2), grad, true);
-                            
-                            this.ctx.drawImage(entity.rankIcon, ~~(screenH.x - bWidth / 2) - 16 - (meas[4] * 2) - meas[3], ~~screenH.y - (meas[4] * 0.5), entity.rankIcon.width * ((meas[4] * 2) / entity.rankIcon.width) , entity.rankIcon.height * ((meas[4] * 2) / entity.rankIcon.height));
+                            this.ctx.drawImage(entity.rankIcon, ~~(screenH.x - bWidth / 2) - 16 - (meas[4] * 2) - meas[3], ~~screenH.y - (meas[4] * 0.5), entity.rankIcon.width * ((meas[4] * 2) / entity.rankIcon.width), entity.rankIcon.height * ((meas[4] * 2) / entity.rankIcon.height));
                             this.text(`${entity.level}`, `${this.settings.espFontSize}px GameFont`, '#FFFFFF', ~~(screenH.x - bWidth / 2) - 16 - meas[3], ~~screenH.y + meas[4] * 1);
                         }
-
                         this.rect(~~(screenH.x + bWidth / 2) + padding, ~~screenH.y - padding, 0, 0, (meas[4] * 5), (meas[4] * 4) + (padding * 2), grad2, true);
-
-						this.text(entity.name, `${this.settings.espFontSize}px GameFont`, entity.team === null ? '#FFCDB4' : this.getMyself().team === entity.team ? '#B4E6FF' : '#FFCDB4', (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 1)
-                        if (entity.clan) {
-                            this.text(`[${entity.clan}]`, `${this.settings.espFontSize}px GameFont`, '#AAAAAA', (screenH.x + bWidth / 2) + 8 + meas[5], screenH.y + meas[4] * 1)
-                        }
-						this.text(`${entity.health} HP`, `${this.settings.espFontSize}px GameFont`, "#33FF33", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 2)
-						this.text(`${entity.weapon.name}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 3)
-                        
+                        this.text(entity.name, `${this.settings.espFontSize}px GameFont`, entity.team === null ? '#FFCDB4' : this.getMyself().team === entity.team ? '#B4E6FF' : '#FFCDB4', (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 1)
+                        if (entity.clan) this.text(`[${entity.clan}]`, `${this.settings.espFontSize}px GameFont`, '#AAAAAA', (screenH.x + bWidth / 2) + 8 + meas[5], screenH.y + meas[4] * 1)
+                        this.text(`${entity.health} HP`, `${this.settings.espFontSize}px GameFont`, "#33FF33", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 2)
+                        this.text(`${entity.weapon.name}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 3)
                         this.text("[", `${this.settings.espFontSize}px GameFont`, "#AAAAAA", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 4)
                         this.text(`${playerDist}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4 + meas[0], screenH.y + meas[4] * 4)
                         this.text("m]", `${this.settings.espFontSize}px GameFont`, "#AAAAAA", (screenH.x + bWidth / 2) + 4 + meas[0] + meas[1], screenH.y + meas[4] * 4)
