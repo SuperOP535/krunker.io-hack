@@ -3,7 +3,7 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      4.0
+// @version      4.1
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -602,7 +602,7 @@ class Hack {
 
 						this.text(entity.name, `${this.settings.espFontSize}px GameFont`, entity.team === null ? '#FFCDB4' : this.getMyself().team === entity.team ? '#B4E6FF' : '#FFCDB4', (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 1)
                         if (entity.clan) {
-                            this.text(`[${entity.clan}]`, `${this.settings.espFontSize}px GameFont`, '#AAAAAA', (screenH.x + bWidth / 2) + 8 + name_mes, screenH.y + meas[4] * 1)
+                            this.text(`[${entity.clan}]`, `${this.settings.espFontSize}px GameFont`, '#AAAAAA', (screenH.x + bWidth / 2) + 8 + meas[5], screenH.y + meas[4] * 1)
                         }
 						this.text(`${entity.health} HP`, `${this.settings.espFontSize}px GameFont`, "#33FF33", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 2)
 						this.text(`${entity.weapon.name}`, `${this.settings.espFontSize}px GameFont`, "#DDDDDD", (screenH.x + bWidth / 2) + 4, screenH.y + meas[4] * 3)
