@@ -3,7 +3,7 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      4.2
+// @version      4.3
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -55,6 +55,11 @@ class Hack {
             crosshair: 0,
             antiAlias: false,
             highPrecision: false,
+            customCrosshair: 0,
+            customCrosshairColor: "#FFFFFF",
+            customCrosshairLength: 14,
+            customCrosshairThickness: 2,
+            customCrosshairOutline: 0,
         };
         this.settingsMenu = [];
         this.aimbot = {
@@ -126,6 +131,7 @@ class Hack {
                 },
                 set(t) {
                     self.settings.esp = parseInt(t)
+                    window.playerInfos.style.width = self.settings.esp == 0 ? '100%' : '0%';
                 }
             },
             espColor: {
@@ -329,7 +335,62 @@ class Hack {
                 set(t) {
                     self.settings.weaponScope = parseInt(t);
                 }
-            }
+            },
+            customCrosshair: {
+                name: "Crosshair",
+                pre: "<div class='setHed'>Custom Crosshair</div>",
+                val: 0,
+                html() {
+                    return `<select onchange="window.hack.setSetting('customCrosshair', this.value)">
+                    <option value="0"${self.settingsMenu.customCrosshair.val == 0 ? " selected" : ""}>Original</option>
+                    <option value="1"${self.settingsMenu.customCrosshair.val == 1 ? " selected" : ""}>Custom</option>
+                    <option value="2"${self.settingsMenu.customCrosshair.val == 2 ? " selected" : ""}>Both</option>
+                    </select>`
+                },
+                set(t) {
+                    self.settings.customCrosshair = parseInt(t);
+                }
+            },
+            customCrosshairColor: {
+                name: "Color",
+                val: "#ffffff",
+                html() {
+                    return `<input type='color' id='crosshairColor' name='color' value='${self.settingsMenu.customCrosshairColor.val}' oninput='window.hack.setSetting("customCrosshairColor", this.value)' style='float:right;margin-top:5px'/>` 
+                },
+                set(t) {
+                    self.settings.customCrosshairColor = t;
+                }
+            },
+            customCrosshairLength: {
+                name: "Length",
+                val: 16,
+                html() {
+                    return `<span class='sliderVal' id='slid_hack_customCrosshairLength'>${self.settingsMenu.customCrosshairLength.val}</span><div class='slidecontainer'><input type='range' min='4' max='50' step='2' value='${self.settingsMenu.customCrosshairLength.val}' class='sliderM' oninput="window.hack.setSetting('customCrosshairLength', this.value)"></div>`
+                },
+                set(t) {
+                    self.settings.customCrosshairLength = parseInt(t);
+                }
+            },
+            customCrosshairThickness: {
+                name: "Thickness",
+                val: 2,
+                html() {
+                    return `<span class='sliderVal' id='slid_hack_customCrosshairThickness'>${self.settingsMenu.customCrosshairThickness.val}</span><div class='slidecontainer'><input type='range' min='2' max='20' step='2' value='${self.settingsMenu.customCrosshairThickness.val}' class='sliderM' oninput="window.hack.setSetting('customCrosshairThickness', this.value)"></div>`
+                },
+                set(t) {
+                    self.settings.customCrosshairThickness = parseInt(t);
+                }
+            },
+            customCrosshairOutline: {
+                name: "Outline",
+                val: 0,
+                html() {
+                    return `<span class='sliderVal' id='slid_hack_customCrosshairOutline'>${self.settingsMenu.customCrosshairOutline.val}</span><div class='slidecontainer'><input type='range' min='0' max='10' step='1' value='${self.settingsMenu.customCrosshairOutline.val}' class='sliderM' oninput="window.hack.setSetting('customCrosshairOutline', this.value)"></div>`
+                },
+                set(t) {
+                    self.settings.customCrosshairOutline = parseInt(t);
+                }
+            },
         };
     }
 
@@ -626,7 +687,27 @@ class Hack {
     }
 
     drawFlag() {
+        if (window.playerInfos.style.width != "0%") return;
         if (window.objectiveIcon && window.objectiveIcon.style.display === "inline-block") this.image(parseFloat(window.objectiveIcon.style.left) / 100 * innerWidth, parseFloat(window.objectiveIcon.style.top) / 100 * innerHeight, this.flag, 0, 0, parseFloat(window.objectiveIcon.style.width), parseFloat(window.objectiveIcon.style.height))
+    }
+
+    drawCrosshair() {
+        if (this.settings.customCrosshair == 0) return;
+        
+        let thickness = this.settings.customCrosshairThickness;
+        let outline = this.settings.customCrosshairOutline;
+        let length = this.settings.customCrosshairLength;
+
+        let cx = (this.canvas.width / 2);
+        let cy = (this.canvas.height / 2);
+
+        if (outline > 0) {
+            this.rect(cx - length - outline, cy - (thickness / 2) - outline, 0, 0, (length * 2) + (outline * 2), thickness + (outline * 2), '#000000', true);
+            this.rect(cx - (thickness * 0.50) - outline, cy - length - outline, 0, 0, thickness + (outline * 2), (length * 2) + (outline * 2), '#000000', true);
+        }
+
+        this.rect(cx - length, cy - (thickness / 2), 0, 0, (length * 2) , thickness, this.settings.customCrosshairColor, true);
+        this.rect(cx - (thickness * 0.50), cy - length, 0, 0, thickness, length * 2, this.settings.customCrosshairColor, true);
     }
 
     bhop() {
@@ -772,9 +853,14 @@ class Hack {
         return this.settings.crosshair === 1 ? 52.75 : (this.settings.crosshair === 2 ? 46.75 : 39.75);
     }
 
+    crosshairOpacity() {
+        return this.settings.customCrosshair == 1 ? 0 : 1;
+    }
+
     render() {
         this.ctx.clearRect(0, 0, innerWidth, innerHeight);
         this.drawESP();
+        this.drawCrosshair();
         this.drawFPS();
         this.drawFlag();
         this.autoRespawn();
@@ -826,13 +912,10 @@ GM_xmlhttpRequest({
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
-            .replace(/if\(\w+\.isVisible\){/, "if(true){")
-            .replace(/}else \w+\.style\.display="none"/, "}")
-            .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
+            //.replace(/if\(\w+\.isVisible\){/, "if(true){")
+            .replace(/(\bthis\.list\b)/g, "window.hack.hooks.enities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
             .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+,\w+;window\.hack\.hooks\.entities=\[\])/, "$1;window.hack.hooks.world=$2")
-            .replace(/(\w+\.style\.left=)100\*(\w+\.\w+)\+"%",/, '$1$2*innerWidth+"px",window.hack.hooks.entities[i].hookedX=$2*innerWidth,')
-            .replace(/(\w+\.style\.top=)100\*\(1-(\w+\.\w+)\)\+"%",/, '$1(1-$2)*innerHeight+"px",window.hack.hooks.entities[i].hookedY=(1-$2)*innerHeight,')
             .replace(/"mousemove",function\((\w+)\){if\((\w+)\.enabled/, '"mousemove",function($1){window.hack.hooks.context = $2;if($2.enabled')
             .replace(/(\w+).procInputs\((\w+),(\w+)\),(\w+).moveCam/, 'window.hack.loop($4, $1, $2, $3), $1.procInputs($2,$3),$4.moveCam')
             .replace(/(\w+).exports\.ambientVal/, 'window.hack.hooks.config = $1.exports, $1.exports.ambientVal')
@@ -845,6 +928,7 @@ GM_xmlhttpRequest({
             .replace(/(\w+).updateCrosshair=function\((\w+),(\w+)\){/, '$1.updateCrosshair=function($2,$3){$2=window.hack.getCrosshair($2);')
             .replace(/antialias:!1/g, 'antialias:window.hack.settings.antiAlias ? 1 : !1')
             .replace(/precision:"mediump"/g, 'precision:window.hack.settings.highPrecision ? "highp": "mediump"')
+            .replace(/crosshair\.style\.opacity\=(\w+)\)/, 'crosshair.style.opacity = window.hack.crosshairOpacity())')
             .replace(/setTimeout\(\(\)=>{!(.*)},2500\);/, '');
         GM_xmlhttpRequest({
             method: "GET",
