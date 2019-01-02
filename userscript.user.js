@@ -3,7 +3,7 @@
 // @description  Krunker.io Hacks
 // @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
 // @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @version      4.4
+// @version      4.5
 // @author       Faber, Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
@@ -127,11 +127,16 @@ class Hack {
                 name: "Player ESP",
                 val: 1,
                 html() {
-                    return `<select onchange="window.hack.setSetting('esp', this.value)"><option value="0"${self.settingsMenu.esp.val == 0 ? " selected" : ""}>Disabled</option><option value="1"${self.settingsMenu.esp.val == 1 ? " selected" : ""}>Full</option><option value="2"${self.settingsMenu.esp.val == 2 ? " selected" : ""}>Outline Only</option></select>`
+                    return `<select onchange="window.hack.setSetting('esp', this.value)">
+                    <option value="0"${self.settingsMenu.esp.val == 0 ? " selected" : ""}>Disabled</option>
+                    <option value="1"${self.settingsMenu.esp.val == 1 ? " selected" : ""}>Full</option>
+                    <option value="2"${self.settingsMenu.esp.val == 2 ? " selected" : ""}>Outline Only</option>
+                    <option value="3"${self.settingsMenu.esp.val == 3 ? " selected" : ""}>Name Only</option>
+                    </select>`
                 },
                 set(t) {
                     self.settings.esp = parseInt(t)
-                    window.playerInfos.style.width = self.settings.esp == 0 ? '100%' : '0%';
+                    window.playerInfos.style.width = self.settings.esp == 0 || self.settings.esp == 3 ? '100%' : '0%';
                 }
             },
             espColor: {
@@ -430,9 +435,9 @@ class Hack {
             case 'Y':
                 {
                     this.settings.esp++;
-                    if (this.settings.esp > 2) this.settings.esp = 0;
+                    if (this.settings.esp > 3) this.settings.esp = 0;
                     this.setSetting('esp', this.settings.esp);
-                    opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 2 ? 'Outline Only' : 'Full');
+                    opt = this.settings.esp === 0 ? 'Disabled' : (this.settings.esp === 3 ? 'Name Only' : (this.settings.esp === 2 ? 'Outline Only' : 'Full'));
                     this.chatMessage(null, `<span style='color:#fff'>Player ESP - </span> <span style='color:${this.settings.esp > 0 ? 'green' : 'red'}'>${opt}</span>`, !0);
                     break;
                 }
@@ -632,7 +637,7 @@ class Hack {
                 let hDiff = ~~(screenR.y - screenH.y);
                 let bWidth = ~~(hDiff * 0.6);
                 const color = this.colors[this.settings.espColor];
-                if (this.settings.esp > 0) {
+                if (this.settings.esp > 0 && this.settings.esp != 3) {
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#000000', false);
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, hDiff + 2, '#44FF44', true);
                     this.rect((screenH.x - bWidth / 2) - 7, ~~screenH.y - 1, 0, 0, 4, ~~((entity.maxHealth - entity.health) / entity.maxHealth * (hDiff + 2)), '#000000', true);
@@ -912,7 +917,7 @@ GM_xmlhttpRequest({
     onload: res => {
         let code = res.responseText
         code = code.replace(/String\.prototype\.escape=function\(\){(.*)\)},(Number\.)/, "$2")
-            //.replace(/if\(\w+\.isVisible\){/, "if(true){")
+            .replace(/(if\(\w+\.isVisible)\){/, "$1||window.hack.settings.esp == 3){")
             .replace(/(\bthis\.list\b)/g, "window.hack.hooks.entities")
             .replace(/\w+\.players\.list/g, "window.hack.hooks.entities")
             .replace(/(function\(\w+,(\w+),\w+,\w+,\w+,\w+,\w+\){var \w+,\w+,\w+,\w+;window\.hack\.hooks\.entities=\[\])/, "$1;window.hack.hooks.world=$2")
