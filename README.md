@@ -31,7 +31,7 @@
 - Tampermonkey
 - ES6 Support
 
-### Userscript: [CLICK HERE](https://raw.githubusercontent.com/xF4b3r/krunker.io-hack/master/userscript.user.js)
+### Userscript: [CLICK HERE](https://raw.githubusercontent.com/Tehchy/krunker.io-hack/master/userscript.user.js)
 
 ### Collaborators:
 - William Thomson

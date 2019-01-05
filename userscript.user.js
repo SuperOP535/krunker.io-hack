@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Krunker.io Hack
 // @description  Krunker.io Hacks
-// @updateURL    https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
-// @downloadURL  https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
+// @updateURL    https://github.com/Tehchy/krunker.io-hack/raw/master/userscript.user.js
+// @downloadURL  https://github.com/Tehchy/krunker.io-hack/raw/master/userscript.user.js
 // @version      4.5
-// @author       Faber, Tehchy
+// @author       Tehchy
 // @include      /^(https?:\/\/)?(www\.)?(.+)krunker\.io(|\/|\/\?(server|party)=.+)$/
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
