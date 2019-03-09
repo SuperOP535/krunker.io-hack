@@ -1,19 +1,37 @@
 # Krunker.io Hack
-** This is the only working krunker.io hack. It was made thanks to the collaborators named below and no one else. All the other scripts are a copy from this one (e.g: quake.pw (quake#5338), who copied this hack and claimed it as his hack)
+### Scammers and people who stole this script (don't install their scripts as they're all outdated and stolen, thanks!):
+- qHook, quake
+- jabbidle
+- Mr.Coder
+- Everyone on greasyfork
 
 ### Features:
-- Aimbot
+- Aimbot (Triggerbot, Quickscoper, Manual, Hip fire) (Various Ranges)
 - FPS Counter
-- Tracers
-- ESP (aka. Wallhack)
-- BHop
+- Player Tracers
+- Player ESP (aka. Wallhack) (Full, Outline Only) (Various Colors)
+- BHop (Automatic, Manual)
+- Speed Hack
 - NoRecoil
+- Auto Respawn
+- Auto Weapon Swap
+- Auto Reload
+- Crosshair Mod
+
+## KeyBinds:
+- T: Cycle Through Aimbot Modes
+- B: Cycle Through BHop Modes
+- Y: Cycle Through Player ESP Modes
+- U: Cycle Through Player ESP Colors
+- I: Change Scope
+- P: Enable/Disable Speedhack
+- O: Cycle Through Crosshair Sizes
 
 ### Requirements:
 - Tampermonkey
 - ES6 Support
 
-### Userscript: https://github.com/xF4b3r/krunker/raw/master/userscript.user.js
+### Userscript: [CLICK HERE](https://raw.githubusercontent.com/Tehchy/krunker.io-hack/master/userscript.user.js)
 
 ### Collaborators:
 - William Thomson
